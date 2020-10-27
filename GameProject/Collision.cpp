@@ -69,3 +69,24 @@ bool Collision::CheckCollision(Collision other, sf::Vector2f& direction, float p
 
     return false;
 }
+
+bool Collision::CheckCollision(Collision other)
+{
+    sf::Vector2f otherPosition = other.GetPosition();
+    sf::Vector2f otherHalfsize = other.GetHalfsize();
+    sf::Vector2f thisPosition = GetPosition();
+    sf::Vector2f thisHalfsize = GetHalfsize();
+
+    float deltaX = otherPosition.x - thisPosition.x;
+    float deltaY = otherPosition.y - thisPosition.y;
+
+    float intersectX = abs(deltaX) - (otherHalfsize.x + thisHalfsize.x);
+    float intersectY = abs(deltaY) - (otherHalfsize.y + thisHalfsize.y);
+
+    if (intersectX < 0.0f && intersectY < 0.0f)
+    {
+        return true;
+    }
+
+    return false;
+}

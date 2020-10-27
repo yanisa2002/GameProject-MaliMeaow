@@ -21,22 +21,21 @@ Player::~Player()
 
 void Player::Update(float deltaTime) 
 {
-	sf::Vector2f velocity(0.0f, 0.0f);
 	velocity.x = 0.0f;
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		velocity.x -= speed ;
+		velocity.x -= speed*2.0f ;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		velocity.x += speed ;
+		velocity.x += speed * 2.0f ;
 	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	//	velocity.y += speed * deltaTime;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && canJump)
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && canJump==true)
 	{
 		canJump = false;
-		velocity.y = -sqrtf(2.0f * 5000.0f * jumpHeight);
+		velocity.y = -sqrtf(2.0f * 1500.0f * jumpHeight);
 	}
 
-	velocity.y += 5000.0f * deltaTime;
+	velocity.y += 1500.0f * deltaTime;
 
 	if (velocity.x == 0.0f) {
 

@@ -5,10 +5,15 @@
 #include "Platform.h"
 #include "main.h"
 
+void ResizeView(const sf::RenderWindow& window, sf::View& view) {
+	float aspectRatio = float(window.getSize().x) / float(window.getSize().y);
+	view.setSize(1080.0f* aspectRatio, 720.0f);
+}
+
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(1080, 720), "Mali Meaow",sf::Style::Close | sf::Style::Titlebar);
-	sf::View view(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(512.0f, 512.0f));
+	sf::View view(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(1080.0f, 720.0f));
 	//sf::RectangleShape player(sf::Vector2f(100.0f, 100.0f));
 	//player.setPosition(540.0f, 360.0f);
 	sf::Texture playerTexture;
@@ -27,7 +32,7 @@ int main()
 
 	platforms.push_back(Platform(nullptr, sf::Vector2f(400.0f, 100.0f), sf::Vector2f(500.0f, 450.0f)));
 	platforms.push_back(Platform(nullptr, sf::Vector2f(400.0f, 200.0f), sf::Vector2f(500.0f, 0.0f)));
-	platforms.push_back(Platform(nullptr, sf::Vector2f(1000.0f, 200.0f), sf::Vector2f(500.0f, 700.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(2160.0f, 200.0f), sf::Vector2f(500.0f, 700.0f)));
 	//Platform platform1(nullptr, sf::Vector2f(400.0f, 200.0f), sf::Vector2f(500.0f, 200.0f));
 	//Platform platform2(nullptr, sf::Vector2f(400.0f, 200.0f), sf::Vector2f(500.0f, 0.0f));
 	//Platform platform3(nullptr, sf::Vector2f(1000.0f, 200.0f), sf::Vector2f(500.0f, 500.0f));
@@ -47,11 +52,12 @@ int main()
 				window.close();
 				break;
 			case sf::Event::Resized:
-				printf("New window width: %i New window height: %i\n", evnt.size.width, evnt.size.height);
+				ResizeView(window, view);
+				//printf("New window width: %i New window height: %i\n", evnt.size.width, evnt.size.height);
 				break;
 			case sf::Event::TextEntered:
 				if (evnt.text.unicode < 128) {
-					printf("%c", evnt.text.unicode);
+					printf("%c\n", evnt.text.unicode);
 				}
 			}
 			
@@ -72,8 +78,10 @@ int main()
 		//platform1.GetCollider().CheckCollision(player.GetCollider(), 0.5f);
 		//platform2.GetCollider().CheckCollision(player.GetCollider(), 1.0f);
 
+		view.setCenter(player.GetPosition());
 		window.draw(background);
 		player.Draw(window);
+		window.setView(view);
 
 		for (Platform& platform : platforms)
 			platform.Draw(window);
