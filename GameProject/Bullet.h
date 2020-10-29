@@ -27,4 +27,3 @@ private:
     sf::Vector2f velocity;
     bool isAva = true;
 };
-
