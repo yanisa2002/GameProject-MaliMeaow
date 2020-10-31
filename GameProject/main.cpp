@@ -18,28 +18,34 @@ int main()
 	//sf::RectangleShape player(sf::Vector2f(100.0f, 100.0f));
 	//player.setPosition(540.0f, 360.0f);
 	sf::Texture playerTexture;
-	playerTexture.loadFromFile("catwalk1.png");
-	Player player(&playerTexture, sf::Vector2u(5, 4), 0.3f, 100.0f, 200.0f);
+	playerTexture.loadFromFile("p/catwalk3.png");
+	Player player(&playerTexture, sf::Vector2u(10, 3), 0.3f, 150.0f, 200.0f);
 	//player.setTexture(&playerTexture);
 
 	//bullet
 	sf::Texture BULLET;
-	BULLET.loadFromFile("bullet.png");
+	BULLET.loadFromFile("p/bullet.png");
 	Bullet bullet1(&BULLET, sf::Vector2u(6, 1), 0.15f, 600.0f, player.GetPosition());
 
 	sf::RectangleShape background(sf::Vector2f(5000.0f, 720.0f));
 	background.setPosition(0.0f, 0.0f);
 	sf::Texture space;
-	space.loadFromFile("BG.png");
+	space.loadFromFile("p/BG.png");
 	background.setTexture(&space);
 
-
+	sf::Texture Gress;
+	Gress.loadFromFile("p/Gress.png");
+	
+	sf::Texture Din;
+	Din.loadFromFile("p/grassCenter_rounded.png");
 
 	std::vector<Platform> platforms;
 
 	//platforms.push_back(Platform(nullptr, sf::Vector2f(400.0f, 100.0f), sf::Vector2f(500.0f, 450.0f)));
-	platforms.push_back(Platform(nullptr, sf::Vector2f(400.0f, 200.0f), sf::Vector2f(500.0f, 0.0f)));
-	platforms.push_back(Platform(nullptr, sf::Vector2f(5000.0f, 200.0f), sf::Vector2f(2500.0f, 700.0f)));
+	platforms.push_back(Platform(&Gress, sf::Vector2f(400.0f, 50.0f), sf::Vector2f(550.0f, 480.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(400.0f, 100.0f), sf::Vector2f(500.0f, 0.0f)));
+	platforms.push_back(Platform(&Gress, sf::Vector2f(5000.0f, 100.0f), sf::Vector2f(2500.0f, 700.0f)));
+	platforms.push_back(Platform(&Din, sf::Vector2f(100.0f, 400.0f), sf::Vector2f(25.0f, 720.0f)));
 	//Platform platform1(nullptr, sf::Vector2f(400.0f, 200.0f), sf::Vector2f(500.0f, 200.0f));
 	//Platform platform2(nullptr, sf::Vector2f(400.0f, 200.0f), sf::Vector2f(500.0f, 0.0f));
 	//Platform platform3(nullptr, sf::Vector2f(1000.0f, 200.0f), sf::Vector2f(500.0f, 500.0f));
@@ -55,6 +61,8 @@ int main()
 		deltaTime = clock.restart().asSeconds();
 		sf::Vector2f pos = player.GetPosition();
 		std::cout << pos.x << ' ' << pos.y << '\n';
+
+		std::cout << "Hello";
 
 		/*deltaTime = clock.restart().asSeconds();
 		if (deltaTime > 1.0f / 20.0f)
@@ -78,7 +86,7 @@ int main()
 
 	}
 
-	view.setCenter(player.GetPosition().x, 360.0f);
+	view.setCenter(player.GetPosition().x , 360.0f);
 	if (view.getCenter().x - 540.0f <= 0.0f)
 	{
 		view.setCenter(540.0f, 360.0f);
@@ -124,10 +132,12 @@ int main()
 	//platform2.GetCollider().CheckCollision(player.GetCollider(), 1.0f);
 
 	view.setCenter(player.GetPosition());
+	window.clear();
+	window.setView(view);
 	window.draw(background);
 	bullet1.draw(window);
 	player.Draw(window);
-	window.setView(view);
+	
 
 	for (Platform& platform : platforms)
 		platform.Draw(window);
