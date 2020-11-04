@@ -6,6 +6,7 @@
 #include "Platform.h"
 #include "Bullet.h"
 #include "Item.h"
+#include "time.h"
 
 void ResizeView(const sf::RenderWindow& window, sf::View& view) {
 	float aspectRatio = float(window.getSize().x) / float(window.getSize().y);
@@ -40,10 +41,12 @@ int main()
 	sf::Texture Din;
 	Din.loadFromFile("p/grassCenter_rounded.png");
 
-	sf::Texture Item;
-	Item.loadFromFile("p/cat.png");
-	std::vector<Item> ItemVector;
+	srand(time(NULL));
+	sf::Texture ITEM;
+	ITEM.loadFromFile("p/cointest.png");
+	std::vector <Item> itemVector;
 
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, (rand() % 1000 + 20), 550.0f));
 	/*for (int posi = 0; posi < 1550; posi += 60)
 	{
 		ItemVector.push_back(Item(&Item, sf::Vector2u(9, 1), 0.08f, 800.0f + posi, 550.0f));
@@ -52,13 +55,13 @@ int main()
 	{
 		ItemVector.push_back(Item(&Item, sf::Vector2u(9, 1), 0.08f, 2630.0f + posi, 370.0f));
 	}*/
-	ItemVector.push_back(Item(&Item, sf::Vector2u(9, 1), 0.08f, 2850.0f, 320.0f));
-	ItemVector.push_back(Item(&Item, sf::Vector2u(9, 1), 0.08f, 2900.0f, 300.0f));
-	ItemVector.push_back(Item(&Item, sf::Vector2u(9, 1), 0.08f, 2950.0f, 280.0f));
-	ItemVector.push_back(Item(&Item, sf::Vector2u(9, 1), 0.08f, 3000.0f, 300.0f));
-	ItemVector.push_back(Item(&Item, sf::Vector2u(9, 1), 0.08f, 3050.0f, 320.0f));
-	ItemVector.push_back(Item(&Item, sf::Vector2u(9, 1), 0.08f, 3100.0f, 370.0f));
-	ItemVector.push_back(Item(&Item, sf::Vector2u(9, 1), 0.08f, 3150.0f, 370.0f));
+	//ItemVector.push_back(Item(&Item, sf::Vector2u(9, 1), 0.08f, 2850.0f, 320.0f));
+	//ItemVector.push_back(Item(&Item, sf::Vector2u(9, 1), 0.08f, 2900.0f, 300.0f));
+	//ItemVector.push_back(Item(&Item, sf::Vector2u(9, 1), 0.08f, 2950.0f, 280.0f));
+	//ItemVector.push_back(Item(&Item, sf::Vector2u(9, 1), 0.08f, 3000.0f, 300.0f));
+	//ItemVector.push_back(Item(&Item, sf::Vector2u(9, 1), 0.08f, 3050.0f, 320.0f));
+	//ItemVector.push_back(Item(&Item, sf::Vector2u(9, 1), 0.08f, 3100.0f, 370.0f));
+	//ItemVector.push_back(Item(&Item, sf::Vector2u(9, 1), 0.08f, 3150.0f, 370.0f));
 
 	std::vector<Platform> platforms;
 
@@ -175,6 +178,17 @@ int main()
 
 	window.clear();
 	window.draw(background);
+
+	for (int i = 0; i < itemVector.size(); i++)
+	{
+		itemVector[i].draw(window);
+	}
+
+	for (int i = 0; i < itemVector.size(); i++)
+	{
+		itemVector[i].update(deltaTime, player);
+	}
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
 	{
 
@@ -206,7 +220,7 @@ int main()
 		platform.Draw(window);
 	//platform2.Draw(window);
 	//window.draw(player);
-	window.clear(sf::Color(135, 206, 250));
+	//window.clear(sf::Color(135, 206, 250));
 	window.display();
 	}
 	return 0;
