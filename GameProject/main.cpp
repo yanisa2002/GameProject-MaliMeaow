@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Platform.h"
 #include "Bullet.h"
+#include "Item.h"
 
 void ResizeView(const sf::RenderWindow& window, sf::View& view) {
 	float aspectRatio = float(window.getSize().x) / float(window.getSize().y);
@@ -38,6 +39,26 @@ int main()
 	
 	sf::Texture Din;
 	Din.loadFromFile("p/grassCenter_rounded.png");
+
+	sf::Texture Item;
+	Item.loadFromFile("p/cat.png");
+	std::vector<Item> ItemVector;
+
+	/*for (int posi = 0; posi < 1550; posi += 60)
+	{
+		ItemVector.push_back(Item(&Item, sf::Vector2u(9, 1), 0.08f, 800.0f + posi, 550.0f));
+	}
+	for (int posi = 0; posi < 200; posi += 60)
+	{
+		ItemVector.push_back(Item(&Item, sf::Vector2u(9, 1), 0.08f, 2630.0f + posi, 370.0f));
+	}*/
+	ItemVector.push_back(Item(&Item, sf::Vector2u(9, 1), 0.08f, 2850.0f, 320.0f));
+	ItemVector.push_back(Item(&Item, sf::Vector2u(9, 1), 0.08f, 2900.0f, 300.0f));
+	ItemVector.push_back(Item(&Item, sf::Vector2u(9, 1), 0.08f, 2950.0f, 280.0f));
+	ItemVector.push_back(Item(&Item, sf::Vector2u(9, 1), 0.08f, 3000.0f, 300.0f));
+	ItemVector.push_back(Item(&Item, sf::Vector2u(9, 1), 0.08f, 3050.0f, 320.0f));
+	ItemVector.push_back(Item(&Item, sf::Vector2u(9, 1), 0.08f, 3100.0f, 370.0f));
+	ItemVector.push_back(Item(&Item, sf::Vector2u(9, 1), 0.08f, 3150.0f, 370.0f));
 
 	std::vector<Platform> platforms;
 
@@ -85,7 +106,49 @@ int main()
 		}
 
 	}
+		/*view.setCenter(player.GetPosition());//x=y
+		if (view.getCenter().x - 540.0f <= 0.0f)//front center window behide pic
+		{
+			if (view.getCenter().y - 360.0f <= 0.0f)
+			{
+				view.setCenter(540.0f, 360.0f);//window
+			}
+			if (view.getCenter().y + 360.0f >= 720.0f)
+			{
+				view.setCenter(540.0f, 360.0f);//window
+			}
+			if (view.getCenter().y - 360.0f > 0.0f && view.getCenter().y + 360.0f < 720.0f)
+			{
+				view.setCenter(540.0f, player.GetPosition().y);
+			}
 
+		}
+		if (view.getCenter().x + 540.0f >= 5000.0f)
+		{
+			if (view.getCenter().y - 360.0f <= 0.0f)
+			{
+				view.setCenter(708.0f, 360.0f);//window 1248-540 collision right 
+			}
+			if (view.getCenter().y + 360.0f >= 1329.0f)
+			{
+				view.setCenter(708.0f, 969.0f);//window 1248-540
+			}
+			if (view.getCenter().y - 360.0f > 0.0f && view.getCenter().y + 360.0f < 1329.0f)
+			{
+				view.setCenter(708.0f, player.GetPosition().y);
+			}
+		}
+		if (view.getCenter().x - 540.0f > 0.0f && view.getCenter().x + 540.0f < 1248.0f)
+		{
+			if (view.getCenter().y - 360.0f <= 0.0f)
+			{
+				view.setCenter(player.GetPosition().x, 360.0f);
+			}
+			if (view.getCenter().y + 360.0f >= 1329.0f)
+			{
+				view.setCenter(player.GetPosition().x, 969.0f);
+			}
+		}*/
 	view.setCenter(player.GetPosition().x , 360.0f);
 	if (view.getCenter().x - 540.0f <= 0.0f)
 	{
@@ -110,6 +173,8 @@ int main()
 		if (platform.GetCollider().CheckCollision(player.GetCollider(), direction, 1.0f))
 			player.OnCollision(direction);
 
+	window.clear();
+	window.draw(background);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
 	{
 
@@ -132,10 +197,8 @@ int main()
 	//platform2.GetCollider().CheckCollision(player.GetCollider(), 1.0f);
 
 	view.setCenter(player.GetPosition());
-	window.clear();
 	window.setView(view);
-	window.draw(background);
-	bullet1.draw(window);
+	//bullet1.draw(window);
 	player.Draw(window);
 	
 
@@ -143,6 +206,7 @@ int main()
 		platform.Draw(window);
 	//platform2.Draw(window);
 	//window.draw(player);
+	window.clear(sf::Color(135, 206, 250));
 	window.display();
 	}
 	return 0;
