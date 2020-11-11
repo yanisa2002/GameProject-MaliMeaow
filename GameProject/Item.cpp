@@ -3,7 +3,7 @@
 Item::Item(sf::Texture* texture, sf::Vector2u imageCount, float switchTime, float x, float y) :
     animation(texture, imageCount, switchTime)
 {
-    Cstar = 0;
+    countpoint = 0;
     collide = 0;
     row = 0;
     body.setSize(sf::Vector2f(35.0f, 44.0f));
@@ -23,9 +23,8 @@ void Item::update(float deltaTime, Player player)
     body.setTextureRect(animation.uvRect);
 
     if (player.GetCollider().CheckCollision(this->GetCollider())) {
-        Cstar++;
+        countpoint += 100;
         body.setPosition(-100, 80);
-        //delete this;
     }
 }
 

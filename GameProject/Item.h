@@ -12,20 +12,20 @@ public:
     ~Item();
     void update(float deltaTime, Player player);
     void draw(sf::RenderWindow& window);
+    Collision GetCollider() { return Collision(body); }
 
-   /* int iscollide()
+   int getpoint()
     {
-        if (Cstar == 1) {
-            Cstar--;
+        if (countpoint == 100) {
+            countpoint-=100;
             return 1;
         }
-    }*/
+    }
 
-    Collision GetCollider() { return Collision(body); }
 
 private:
     int row;
-    int Cstar;
+    int countpoint;
     int collide;
     bool faceRight;
     sf::RectangleShape body;

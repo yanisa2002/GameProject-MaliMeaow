@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <iostream>
+#include <sstream>
 #include "Animation.h"
 #include "Player.h"
 #include "Platform.h"
@@ -22,7 +23,7 @@ int main()
 	//player.setPosition(540.0f, 360.0f);
 	sf::Texture playerTexture;
 	playerTexture.loadFromFile("p/catwalk3.png");
-	Player player(&playerTexture, sf::Vector2u(10, 3), 0.3f, 150.0f, 200.0f);
+	Player player(&playerTexture, sf::Vector2u(10, 3), 0.1f, 150.0f, 200.0f);
 	//player.setTexture(&playerTexture);
 
 	//bullet
@@ -36,40 +37,46 @@ int main()
 	space.loadFromFile("p/BG.png");
 	background.setTexture(&space);
 
-	sf::Texture Gress;
-	Gress.loadFromFile("p/Gress.png");
-	
-	sf::Texture Din;
-	Din.loadFromFile("p/grassCenter_rounded.png");
-
 	srand(time(NULL));
 	sf::Texture ITEM;
 	ITEM.loadFromFile("p/cointest.png");
 	std::vector <Item> itemVector;
 
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, (rand() % 1000 + 20), 560.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, (rand() % 1000 + 20), 400.0f));
+	//itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, (rand() % 1000 + 20), 560.0f));
+	//itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, (rand() % 1000 + 20), 400.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 651.0f, 560.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 691.0f, 560.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 731.0f, 560.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 771.0f, 560.0f));
 
 	std::vector<Platform> platforms;
 
 	//platforms.push_back(Platform(nullptr, sf::Vector2f(400.0f, 100.0f), sf::Vector2f(500.0f, 450.0f)));
-	platforms.push_back(Platform(nullptr, sf::Vector2f(200.0f, 25.0f), sf::Vector2f(715.0f, 505.0f)));
-	platforms.push_back(Platform(nullptr, sf::Vector2f(275.0f, 37.0f), sf::Vector2f(993.0f, 380.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(200.0f, 23.0f), sf::Vector2f(715.0f, 505.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(275.0f, 37.0f), sf::Vector2f(991.0f, 380.0f)));
 	platforms.push_back(Platform(nullptr, sf::Vector2f(186.0f, 109.0f), sf::Vector2f(1800.0f, 602.0f)));
-	platforms.push_back(Platform(&Gress, sf::Vector2f(160.0f, 120.0f), sf::Vector2f(2332.0f, 650.0f)));
-	platforms.push_back(Platform(&Gress, sf::Vector2f(280.0f, 50.0f), sf::Vector2f(2920.0f, 550.0f)));
-	//platforms.push_back(Platform(&Gress, sf::Vector2f(300.0f, 50.0f), sf::Vector2f(550.0f, 525.0f)));
-	//platforms.push_back(Platform(&Gress, sf::Vector2f(300.0f, 50.0f), sf::Vector2f(550.0f, 525.0f)));
-	//platforms.push_back(Platform(nullptr, sf::Vector2f(400.0f, 100.0f), sf::Vector2f(500.0f, 0.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(326.0f, 109.0f), sf::Vector2f(2325.0f, 602.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(275.0f, 37.0f), sf::Vector2f(2915.0f, 555.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(200.0f, 23.0f), sf::Vector2f(3236.0f, 408.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(92.0f, 110.0f), sf::Vector2f(3473.0f, 601.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(92.0f, 180.0f), sf::Vector2f(3565.0f, 565.0f)));
 	//platforms.push_back(Platform(&Gress, sf::Vector2f(5000.0f, 200.0f), sf::Vector2f(2500.0f, 800.0f)));
 	platforms.push_back(Platform(nullptr, sf::Vector2f(1172.0f, 64.0f), sf::Vector2f(586.0f, 688.0f)));
 	platforms.push_back(Platform(nullptr, sf::Vector2f(1878.0f, 64.0f), sf::Vector2f(2250.0f, 688.0f)));
 	platforms.push_back(Platform(nullptr, sf::Vector2f(1670.0f, 64.0f), sf::Vector2f(4165.0f, 688.0f)));
 	//platforms.push_back(Platform(&Gress, sf::Vector2f(2500.0f, 200.0f), sf::Vector2f(2500.0f, 800.0f)));
 	//platforms.push_back(Platform(&Din, sf::Vector2f(500.0f, 1000.0f), sf::Vector2f(-200.0f, 360.0f)));
-	//Platform platform1(nullptr, sf::Vector2f(400.0f, 200.0f), sf::Vector2f(500.0f, 200.0f));
-	//Platform platform2(nullptr, sf::Vector2f(400.0f, 200.0f), sf::Vector2f(500.0f, 0.0f));
-	//Platform platform3(nullptr, sf::Vector2f(1000.0f, 200.0f), sf::Vector2f(500.0f, 500.0f));
+
+	int score = 0;
+
+	sf::Font font;
+	font.loadFromFile("p/kenvector_future.ttf");
+	std::ostringstream scoreText;
+	sf::Text Score;
+	Score.setCharacterSize(60);
+	Score.setString(scoreText.str());
+	Score.setFont(font);
+	Score.setFillColor(sf::Color::Red);
 
 	int count,Bul=0;
 	float deltaTime = 0.0f;
@@ -83,7 +90,7 @@ int main()
 		sf::Vector2f pos = player.GetPosition();
 		std::cout << pos.x << ' ' << pos.y << '\n';
 
-		std::cout << "Hello";
+		//std::cout << deltaTime;
 
 		/*deltaTime = clock.restart().asSeconds();
 		if (deltaTime > 1.0f / 20.0f)
@@ -106,52 +113,9 @@ int main()
 		}
 
 	}
-		/*view.setCenter(player.GetPosition());//x=y
-		if (view.getCenter().x - 540.0f <= 0.0f)//front center window behide pic
-		{
-			if (view.getCenter().y - 360.0f <= 0.0f)
-			{
-				view.setCenter(540.0f, 360.0f);//window
-			}
-			if (view.getCenter().y + 360.0f >= 720.0f)
-			{
-				view.setCenter(540.0f, 360.0f);//window
-			}
-			if (view.getCenter().y - 360.0f > 0.0f && view.getCenter().y + 360.0f < 720.0f)
-			{
-				view.setCenter(540.0f, player.GetPosition().y);
-			}
-
-		}
-		if (view.getCenter().x + 540.0f >= 5000.0f)
-		{
-			if (view.getCenter().y - 360.0f <= 0.0f)
-			{
-				view.setCenter(708.0f, 360.0f);//window 1248-540 collision right 
-			}
-			if (view.getCenter().y + 360.0f >= 1329.0f)
-			{
-				view.setCenter(708.0f, 969.0f);//window 1248-540
-			}
-			if (view.getCenter().y - 360.0f > 0.0f && view.getCenter().y + 360.0f < 1329.0f)
-			{
-				view.setCenter(708.0f, player.GetPosition().y);
-			}
-		}
-		if (view.getCenter().x - 540.0f > 0.0f && view.getCenter().x + 540.0f < 1248.0f)
-		{
-			if (view.getCenter().y - 360.0f <= 0.0f)
-			{
-				view.setCenter(player.GetPosition().x, 360.0f);
-			}
-			if (view.getCenter().y + 360.0f >= 1329.0f)
-			{
-				view.setCenter(player.GetPosition().x, 969.0f);
-			}
-		}*/
-	//view.setCenter(player.GetPosition());
+		
 	view.setCenter(player.GetPosition().x , 360.0f);
-
+	
 	if (view.getCenter().x - 540.0f <= 0.0f)
 	{
 		view.setCenter(540.0f, 360.0f);
@@ -164,6 +128,15 @@ int main()
 
 	player.Update(deltaTime);
 
+	Score.setPosition({ view.getCenter().x - 150 ,100 });
+	//if (pos.x > 5000) {
+	//	Score.setPosition(player.GetPosition().x - 110, 50);
+	//}
+
+	scoreText.str(" ");
+	scoreText << "SCORE: " << score;
+	Score.setString(scoreText.str());
+
 	sf::Vector2f direction;
 	Collision playerCollision = player.GetCollider();
 
@@ -175,8 +148,11 @@ int main()
 		if (platform.GetCollider().CheckCollision(player.GetCollider(), direction, 1.0f))
 			player.OnCollision(direction);
 
-	//window.clear();
-	window.clear(sf::Color(221, 248, 255));
+	window.clear();
+	//window.clear(sf::Color(221, 248, 255));
+
+	for (Platform& platform : platforms)
+		platform.Draw(window);
 	window.draw(background);
 
 	for (int i = 0; i < itemVector.size(); i++)
@@ -188,7 +164,13 @@ int main()
 	{
 		itemVector[i].update(deltaTime, player);
 	}
+	for (int i = 0; i < itemVector.size(); i++)
+	{
+		if (itemVector[i].getpoint() == 1) {
+			score += 100;
+		}
 
+	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
 	{
 
@@ -207,17 +189,16 @@ int main()
 		bullet1.isAvaliable();
 	}
 
+
 	//platform1.GetCollider().CheckCollision(player.GetCollider(), 0.5f);
 	//platform2.GetCollider().CheckCollision(player.GetCollider(), 1.0f);
 
-	view.setCenter(player.GetPosition());
+	//view.setCenter(player.GetPosition());
 	window.setView(view);
 	//bullet1.draw(window);
 	player.Draw(window);
-	
+	window.draw(Score);
 
-	for (Platform& platform : platforms)
-		platform.Draw(window);
 	//platform2.Draw(window);
 	//window.draw(player);
 	window.display();
