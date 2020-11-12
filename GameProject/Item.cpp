@@ -19,7 +19,7 @@ Item::~Item()
 
 void Item::update(float deltaTime, Player player)
 {
-    animation.updateItem(row, deltaTime, faceRight);
+    animation.updateItem(row, deltaTime);
     body.setTextureRect(animation.uvRect);
 
     if (player.GetCollider().CheckCollision(this->GetCollider())) {

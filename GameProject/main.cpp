@@ -8,6 +8,7 @@
 #include "Bullet.h"
 #include "Item.h"
 #include "time.h"
+#include "Enemy.h"
 
 void ResizeView(const sf::RenderWindow& window, sf::View& view) {
 	float aspectRatio = float(window.getSize().x) / float(window.getSize().y);
@@ -31,12 +32,19 @@ int main()
 	BULLET.loadFromFile("p/bullet.png");
 	Bullet bullet1(&BULLET, sf::Vector2u(6, 1), 0.15f, 600.0f, player.GetPosition());
 
+	//BG
 	sf::RectangleShape background(sf::Vector2f(5000.0f, 720.0f));
 	background.setPosition(0.0f, 0.0f);
 	sf::Texture space;
 	space.loadFromFile("p/BG.png");
 	background.setTexture(&space);
 
+	//Snail Enemy
+	sf::Texture snail;
+	snail.loadFromFile("p/snail.png");
+	std::vector <Enemy> SnailVector;
+
+	//Coin
 	srand(time(NULL));
 	sf::Texture ITEM;
 	ITEM.loadFromFile("p/cointest.png");
@@ -48,6 +56,18 @@ int main()
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 691.0f, 560.0f));
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 731.0f, 560.0f));
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 771.0f, 560.0f));
+
+	//Snail
+	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 651.0f, 580.0f));
+	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 691.0f, 580.0f));
+	//SnailVector.push_back(Enemy(&snail, sf::Vector2u(12, 8), 0.08f, rand() % 50 + 5337.0f, 564.0f));
+	//SnailVector.push_back(Enemy(&snail, sf::Vector2u(12, 8), 0.08f, rand() % 50 + 6815.0f, 280.0f));
+	//SnailVector.push_back(Enemy(&snail, sf::Vector2u(12, 8), 0.08f, rand() % 50 + 8928.0f, 564.0f));
+	//SnailVector.push_back(Enemy(&snail, sf::Vector2u(12, 8), 0.08f, rand() % 50 + 11580.0f, 564.0f));
+	//SnailVector.push_back(Enemy(&snail, sf::Vector2u(12, 8), 0.08f, rand() % 50 + 15504.0f, 564.0f));
+	//SnailVector.push_back(Enemy(&snail, sf::Vector2u(12, 8), 0.08f, rand() % 50 + 16943.0f, 280.0f));
+	//SnailVector.push_back(Enemy(&snail, sf::Vector2u(12, 8), 0.08f, rand() % 50 + 22955.0f, 377.0f));
+	//SnailVector.push_back(Enemy(&snail, sf::Vector2u(12, 8), 0.08f, rand() % 50 + 25416.0f, 564.0f));
 
 	std::vector<Platform> platforms;
 
@@ -128,7 +148,7 @@ int main()
 
 	player.Update(deltaTime);
 
-	Score.setPosition({ view.getCenter().x - 150 ,100 });
+	Score.setPosition({ view.getCenter().x - 200 ,100 });
 	//if (pos.x > 5000) {
 	//	Score.setPosition(player.GetPosition().x - 110, 50);
 	//}
@@ -169,8 +189,30 @@ int main()
 		if (itemVector[i].getpoint() == 1) {
 			score += 100;
 		}
-
 	}
+
+	if (player.GetPosition().x < 2107 && player.GetPosition().x > 1948 && player.GetPosition().y == 588.5)
+	{  
+		
+
+		score -= 10;
+	}
+
+
+
+
+
+
+
+	for (int i = 0; i < SnailVector.size(); i++) {
+		SnailVector[i].draw(window);
+	}
+	// Alien
+	for (int i = 0; i < SnailVector.size(); i++) {
+		//SnailVector[i].update1(deltaTime, bullet1);
+		SnailVector[i].update2(deltaTime, player);
+	}
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
 	{
 

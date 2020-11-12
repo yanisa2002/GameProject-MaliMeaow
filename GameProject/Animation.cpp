@@ -72,7 +72,7 @@ void Animation::updateBullet(int row, float deltaTime)
     uvRect.top = currentImage.y * uvRect.height;
 }
 
-void Animation::updateItem(int row, float deltaTime, bool faceRight)
+/*void Animation::updateItem(int row, float deltaTime, bool faceRight)
 {
 
     currentImage.y = row;
@@ -101,4 +101,27 @@ void Animation::updateItem(int row, float deltaTime, bool faceRight)
         uvRect.width = -abs(uvRect.width);
 
     }
+}*/
+
+void Animation::updateItem(int row, float deltaTime)
+{
+    currentImage.y = row;
+    totalTime += deltaTime;
+
+
+    if (totalTime >= switchTime)
+    {
+        totalTime -= switchTime;
+        currentImage.x++;
+
+        if (currentImage.x >= imageCount.x)
+        {
+
+            currentImage.x = 0;
+        }
+
+    }
+
+    uvRect.left = currentImage.x * uvRect.width;
+    uvRect.top = currentImage.y * uvRect.height;
 }

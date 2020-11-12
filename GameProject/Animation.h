@@ -9,7 +9,8 @@ public:
 
     void update(int row, float deltaTime,bool faceRight);
     void updateBullet(int row, float deltaTime);
-    void updateItem(int row, float deltaTime, bool faceRight);
+    void updateItem(int row, float deltaTime);
+    //void updateItem(int row, float deltaTime, bool faceRight);
 
 public:
     sf::IntRect uvRect;
