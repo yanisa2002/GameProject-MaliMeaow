@@ -47,19 +47,24 @@ int main()
 	//Coin
 	srand(time(NULL));
 	sf::Texture ITEM;
-	ITEM.loadFromFile("p/cointest.png");
+	ITEM.loadFromFile("p/coin.png");
 	std::vector <Item> itemVector;
 
 	//itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, (rand() % 1000 + 20), 560.0f));
 	//itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, (rand() % 1000 + 20), 400.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 651.0f, 560.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 691.0f, 560.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 731.0f, 560.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, 771.0f, 560.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 641.0f, 560.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 691.0f, 560.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 741.0f, 560.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 791.0f, 560.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 900.0f, 280.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 950.0f, 280.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 1000.0f, 280.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 1050.0f, 280.0f));
 
 	//Snail
-	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 651.0f, 580.0f));
-	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 691.0f, 580.0f));
+	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 691.0f, 630.0f));
+	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 731.0f, 630.0f));
+	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 3132.0f, 630.0f));
 	//SnailVector.push_back(Enemy(&snail, sf::Vector2u(12, 8), 0.08f, rand() % 50 + 5337.0f, 564.0f));
 	//SnailVector.push_back(Enemy(&snail, sf::Vector2u(12, 8), 0.08f, rand() % 50 + 6815.0f, 280.0f));
 	//SnailVector.push_back(Enemy(&snail, sf::Vector2u(12, 8), 0.08f, rand() % 50 + 8928.0f, 564.0f));
@@ -73,13 +78,16 @@ int main()
 
 	//platforms.push_back(Platform(nullptr, sf::Vector2f(400.0f, 100.0f), sf::Vector2f(500.0f, 450.0f)));
 	platforms.push_back(Platform(nullptr, sf::Vector2f(200.0f, 23.0f), sf::Vector2f(715.0f, 505.0f)));
-	platforms.push_back(Platform(nullptr, sf::Vector2f(275.0f, 37.0f), sf::Vector2f(991.0f, 380.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(275.0f, 37.0f), sf::Vector2f(991.0f, 340.0f)));
 	platforms.push_back(Platform(nullptr, sf::Vector2f(186.0f, 109.0f), sf::Vector2f(1800.0f, 602.0f)));
 	platforms.push_back(Platform(nullptr, sf::Vector2f(326.0f, 109.0f), sf::Vector2f(2325.0f, 602.0f)));
-	platforms.push_back(Platform(nullptr, sf::Vector2f(275.0f, 37.0f), sf::Vector2f(2915.0f, 555.0f)));
-	platforms.push_back(Platform(nullptr, sf::Vector2f(200.0f, 23.0f), sf::Vector2f(3236.0f, 408.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(275.0f, 37.0f), sf::Vector2f(2915.0f, 514.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(200.0f, 23.0f), sf::Vector2f(3236.0f, 332.0f)));
 	platforms.push_back(Platform(nullptr, sf::Vector2f(92.0f, 110.0f), sf::Vector2f(3473.0f, 601.0f)));
 	platforms.push_back(Platform(nullptr, sf::Vector2f(92.0f, 180.0f), sf::Vector2f(3565.0f, 565.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(140.0f, 33.0f), sf::Vector2f(1242.0f, 672.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(159.0f, 33.0f), sf::Vector2f(2023.0f, 584.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(140.0f, 33.0f), sf::Vector2f(3261.0f, 672.0f)));
 	//platforms.push_back(Platform(&Gress, sf::Vector2f(5000.0f, 200.0f), sf::Vector2f(2500.0f, 800.0f)));
 	platforms.push_back(Platform(nullptr, sf::Vector2f(1172.0f, 64.0f), sf::Vector2f(586.0f, 688.0f)));
 	platforms.push_back(Platform(nullptr, sf::Vector2f(1878.0f, 64.0f), sf::Vector2f(2250.0f, 688.0f)));
@@ -191,14 +199,20 @@ int main()
 		}
 	}
 
-	if (player.GetPosition().x < 2107 && player.GetPosition().x > 1948 && player.GetPosition().y == 588.5)
+	if (player.GetPosition().x < 2107 && player.GetPosition().x > 1948 && player.GetPosition().y == 500)
 	{  
-		
-
-		score -= 10;
+		score -= 1;
 	}
 
+	if (player.GetPosition().x < 3330 && player.GetPosition().x > 3183 && player.GetPosition().y == 588)
+	{
+		score -= 1;
+	}
 
+	if (player.GetPosition().x < 1311 && player.GetPosition().x > 1170 && player.GetPosition().y == 588)
+	{
+		score -= 1;
+	}
 
 
 

@@ -6,7 +6,7 @@ Enemy::Enemy(sf::Texture* texture, sf::Vector2u imageCount, float switchTime, fl
 {
     this->speed = speed;
     row = 0;
-    body.setSize(sf::Vector2f(70.0f, 50.0f));
+    body.setSize(sf::Vector2f(110.0f, 90.0f));
     body.setOrigin(body.getSize() / 2.0f);
     body.setPosition(x, y);
     body.setTexture(texture);

@@ -12,6 +12,7 @@ public:
     Enemy(sf::Texture* texture, sf::Vector2u imageCount, float switchTime, float x, float y);
     ~Enemy();
     //void update1(float deltaTime, Bullet bullet1);
+    //faceRight = true;
     void update2(float deltaTime, Player player);
     void draw(sf::RenderWindow& window);
     Collision GetCollider() { return Collision(body); }
@@ -37,6 +38,7 @@ private:
     int row;
     int count = 0;
     int x1 = 0;
+    //bool faceRight;
     float speed;
     sf::RectangleShape body;
     Animation animation;
