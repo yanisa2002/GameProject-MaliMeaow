@@ -36,16 +36,26 @@ void Enemy::update2(float deltaTime, Player player)
     {
         velocity.y = 0;
         velocity.x = 80;
+
         if (player.GetPosition().x < body.getPosition().x)
         {
             body.move(-velocity * deltaTime);
+            faceRight = true;
+        }
+        
+        else if (player.GetPosition().x > body.getPosition().x) {
+            
+           // animation.update(row, deltaTime);
+            body.move(velocity * deltaTime);
+            faceRight = false;
+
         }
         else if (player.GetCollider().CheckCollision(this->GetCollider()))
         {
             x1 += 10;
             body.setPosition(-100.0f, 350.0f);
         }
-        animation.updateItem(row, deltaTime);
+        animation.update(row, deltaTime,faceRight);
         body.setTextureRect(animation.uvRect);
     }
 

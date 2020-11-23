@@ -38,7 +38,7 @@ private:
     int row;
     int count = 0;
     int x1 = 0;
-    //bool faceRight;
+    bool faceRight;
     float speed;
     sf::RectangleShape body;
     Animation animation;

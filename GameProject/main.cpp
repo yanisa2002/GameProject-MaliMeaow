@@ -27,6 +27,13 @@ int main()
 	Player player(&playerTexture, sf::Vector2u(10, 3), 0.1f, 150.0f, 200.0f);
 	//player.setTexture(&playerTexture);
 
+	//HP
+	float playerHP = 80000;
+	sf::RectangleShape HP(sf::Vector2f(playerHP / 250.0f, 30));
+	HP.setPosition(sf:: Vector2f(450, 46));
+	HP.setFillColor(sf::Color::Red);
+	HP.setSize(sf::Vector2f(playerHP / 320.f, 15));
+
 	//bullet
 	sf::Texture BULLET;
 	BULLET.loadFromFile("p/bullet.png");
@@ -60,6 +67,16 @@ int main()
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 950.0f, 280.0f));
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 1000.0f, 280.0f));
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 1050.0f, 280.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 3170.0f, 265.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 3220.0f, 265.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 3270.0f, 265.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 3320.0f, 265.0f));
+
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 1843.0f, 513.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 1880.0f, 480.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 1920.0f, 450.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 1960.0f, 420.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 2000.0f, 390.0f));
 
 	//Snail
 	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 691.0f, 630.0f));
@@ -157,6 +174,8 @@ int main()
 	player.Update(deltaTime);
 
 	Score.setPosition({ view.getCenter().x - 200 ,100 });
+
+	HP.setPosition({ view.getCenter().x - 200 ,20 });
 	//if (pos.x > 5000) {
 	//	Score.setPosition(player.GetPosition().x - 110, 50);
 	//}
@@ -198,20 +217,33 @@ int main()
 			score += 100;
 		}
 	}
+	//platform.GetCollider().CheckCollision(player.GetCollider()
+	for (int i = 0; i < SnailVector.size(); i++) {
+		if (SnailVector[i].GetCollider().CheckCollision(player.GetCollider())) {
+
+			//std::cout << "............................";
+			playerHP -= 50;
+			HP.setSize(sf::Vector2f(playerHP / 320.f, 15));
+
+		}
+	}
 
 	if (player.GetPosition().x < 2107 && player.GetPosition().x > 1948 && player.GetPosition().y == 500)
 	{  
-		score -= 1;
+		playerHP -= 100;
+		HP.setSize(sf::Vector2f(playerHP / 320.f, 15));
 	}
 
 	if (player.GetPosition().x < 3330 && player.GetPosition().x > 3183 && player.GetPosition().y == 588)
 	{
-		score -= 1;
+		playerHP -= 100;
+		HP.setSize(sf::Vector2f(playerHP / 320.f, 15));
 	}
 
 	if (player.GetPosition().x < 1311 && player.GetPosition().x > 1170 && player.GetPosition().y == 588)
 	{
-		score -= 1;
+		playerHP -= 100;
+		HP.setSize(sf::Vector2f(playerHP / 320.f, 15));
 	}
 
 
@@ -254,7 +286,7 @@ int main()
 	//bullet1.draw(window);
 	player.Draw(window);
 	window.draw(Score);
-
+	window.draw(HP);
 	//platform2.Draw(window);
 	//window.draw(player);
 	window.display();
