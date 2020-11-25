@@ -46,6 +46,13 @@ int main()
 	space.loadFromFile("p/BG.png");
 	background.setTexture(&space);
 
+	//BG2
+	sf::RectangleShape background2(sf::Vector2f(5000.0f, 720.0f));
+	background2.setPosition(10000.0f, 0.0f);
+	sf::Texture space2;
+	space2.loadFromFile("p/BG2.png");
+	background2.setTexture(&space2);
+
 	//Snail Enemy
 	sf::Texture snail;
 	snail.loadFromFile("p/snail.png");
@@ -82,7 +89,7 @@ int main()
 	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 691.0f, 630.0f));
 	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 731.0f, 630.0f));
 	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 3132.0f, 630.0f));
-	//SnailVector.push_back(Enemy(&snail, sf::Vector2u(12, 8), 0.08f, rand() % 50 + 5337.0f, 564.0f));
+	SnailVector.push_back(Enemy(&snail, sf::Vector2u(12, 8), 0.08f, 3744.0f, 630.0f));
 	//SnailVector.push_back(Enemy(&snail, sf::Vector2u(12, 8), 0.08f, rand() % 50 + 6815.0f, 280.0f));
 	//SnailVector.push_back(Enemy(&snail, sf::Vector2u(12, 8), 0.08f, rand() % 50 + 8928.0f, 564.0f));
 	//SnailVector.push_back(Enemy(&snail, sf::Vector2u(12, 8), 0.08f, rand() % 50 + 11580.0f, 564.0f));
@@ -111,6 +118,9 @@ int main()
 	platforms.push_back(Platform(nullptr, sf::Vector2f(1670.0f, 64.0f), sf::Vector2f(4165.0f, 688.0f)));
 	//platforms.push_back(Platform(&Gress, sf::Vector2f(2500.0f, 200.0f), sf::Vector2f(2500.0f, 800.0f)));
 	//platforms.push_back(Platform(&Din, sf::Vector2f(500.0f, 1000.0f), sf::Vector2f(-200.0f, 360.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(275.0f, 37.0f), sf::Vector2f(10736.0f, 450.0f)));
+
+	platforms.push_back(Platform(nullptr, sf::Vector2f(5000.0f, 64.0f), sf::Vector2f(12500.0f, 688.0f)));
 
 	int score = 0;
 
@@ -159,23 +169,14 @@ int main()
 
 	}
 		
-	view.setCenter(player.GetPosition().x , 360.0f);
 	
-	if (view.getCenter().x - 540.0f <= 0.0f)
-	{
-		view.setCenter(540.0f, 360.0f);
-
-	}
-	if (view.getCenter().x + 540.0f >= 5000.0f)
+	/*if (view.getCenter().x + 540.0f >= 5000.0f)
 	{
 		view.setCenter(4460.0f, 360.0f);
 	}
-
+	*/
 	player.Update(deltaTime);
 
-	Score.setPosition({ view.getCenter().x - 200 ,100 });
-
-	HP.setPosition({ view.getCenter().x - 200 ,20 });
 	//if (pos.x > 5000) {
 	//	Score.setPosition(player.GetPosition().x - 110, 50);
 	//}
@@ -201,6 +202,7 @@ int main()
 	for (Platform& platform : platforms)
 		platform.Draw(window);
 	window.draw(background);
+	window.draw(background2);
 
 	for (int i = 0; i < itemVector.size(); i++)
 	{
@@ -215,6 +217,8 @@ int main()
 	{
 		if (itemVector[i].getpoint() == 1) {
 			score += 100;
+			
+
 		}
 	}
 	//platform.GetCollider().CheckCollision(player.GetCollider()
@@ -224,6 +228,11 @@ int main()
 			//std::cout << "............................";
 			playerHP -= 50;
 			HP.setSize(sf::Vector2f(playerHP / 320.f, 15));
+			if (playerHP < 0) {
+
+				playerHP = 0;
+
+			}
 
 		}
 	}
@@ -232,22 +241,35 @@ int main()
 	{  
 		playerHP -= 100;
 		HP.setSize(sf::Vector2f(playerHP / 320.f, 15));
+		if (playerHP < 0) {
+
+			playerHP = 0;
+
+		}
 	}
 
 	if (player.GetPosition().x < 3330 && player.GetPosition().x > 3183 && player.GetPosition().y == 588)
 	{
 		playerHP -= 100;
 		HP.setSize(sf::Vector2f(playerHP / 320.f, 15));
+		if (playerHP < 0) {
+
+			playerHP = 0;
+
+		}
 	}
 
 	if (player.GetPosition().x < 1311 && player.GetPosition().x > 1170 && player.GetPosition().y == 588)
 	{
 		playerHP -= 100;
 		HP.setSize(sf::Vector2f(playerHP / 320.f, 15));
+		if (playerHP < 0) {
+		
+			playerHP = 0;
+		  
+		}
 	}
-
-
-
+	
 
 
 	for (int i = 0; i < SnailVector.size(); i++) {
@@ -277,6 +299,30 @@ int main()
 		bullet1.isAvaliable();
 	}
 
+	view.setCenter(player.GetPosition().x, 360.0f);
+
+	if (view.getCenter().x - 540.0f <= 0.0f)
+	{
+		view.setCenter(540.0f, 360.0f);
+	}
+	if (view.getCenter().x + 540.0f >= 5000.0f)
+	{
+		view.setCenter(4460.0f, 360.0f);
+	}
+	if (player.GetPosition().x >= 10000) {
+		if (view.getCenter().x - 540.0f <= 10000.0f) {
+			view.setCenter(10540.0f, 360.0f);
+		}
+	}
+	if (view.getCenter().x + 540.0f >= 15000.0f) {
+		view.setCenter(14460.0f, 360.0f);
+	}
+
+
+
+	Score.setPosition({ view.getCenter().x - 200 ,100 });
+
+	HP.setPosition({ view.getCenter().x - 200 ,20 });
 
 	//platform1.GetCollider().CheckCollision(player.GetCollider(), 0.5f);
 	//platform2.GetCollider().CheckCollision(player.GetCollider(), 1.0f);

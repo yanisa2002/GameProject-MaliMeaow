@@ -60,10 +60,28 @@ void Player::Update(float deltaTime)
 		}
 	}
 
+
+
+
+	if (body.getPosition().x >= 4300 && body.getPosition().x <= 4375) {
+
+		body.setPosition(10500, body.getPosition().y);
+
+	}
+
+
+
+
+
+
 	animation.update(row, deltaTime, faceRight);
 	body.setTextureRect(animation.uvRect);
 	body.move(velocity * deltaTime);
 }
+
+
+
+
 
 void Player::Draw(sf::RenderWindow& window) 
 {
@@ -91,3 +109,4 @@ void Player::OnCollision(sf::Vector2f direction)
 
 	}
 }
+
