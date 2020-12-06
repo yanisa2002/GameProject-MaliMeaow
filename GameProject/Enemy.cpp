@@ -61,6 +61,19 @@ void Enemy::update2(float deltaTime, Player player)
 
 }
 
+void Enemy::OnCollision(sf::Vector2f direction, float deltaTime)
+{
+    if (direction.x < 0.0f)
+    {
+        body.move(-velocity * deltaTime);
+    }
+    else if (direction.x > 0.0f)
+    {
+        body.move(velocity * deltaTime);
+    }
+
+}
+
 void Enemy::draw(sf::RenderWindow& window)
 {
     window.draw(body);

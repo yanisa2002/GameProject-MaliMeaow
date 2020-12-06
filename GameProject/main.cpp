@@ -74,10 +74,16 @@ int main()
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 950.0f, 280.0f));
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 1000.0f, 280.0f));
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 1050.0f, 280.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 2535.0f, 600.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 2585.0f, 600.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 2635.0f, 600.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 2685.0f, 600.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 2735.0f, 600.0f));
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 3170.0f, 265.0f));
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 3220.0f, 265.0f));
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 3270.0f, 265.0f));
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 3320.0f, 265.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 3566.0f, 430.0f));
 
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 1843.0f, 513.0f));
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 1880.0f, 480.0f));
@@ -86,10 +92,12 @@ int main()
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 2000.0f, 390.0f));
 
 	//Snail
-	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 691.0f, 630.0f));
-	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 731.0f, 630.0f));
-	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 3132.0f, 630.0f));
-	SnailVector.push_back(Enemy(&snail, sf::Vector2u(12, 8), 0.08f, 3744.0f, 630.0f));
+	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 691.0f, 650.0f));
+	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 831.0f, 650.0f));
+	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 1520.0f, 650.0f));
+	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 2700.0f, 650.0f));
+	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 3650.0f, 650.0f));
+	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 4000.0f, 650.0f));
 	//SnailVector.push_back(Enemy(&snail, sf::Vector2u(12, 8), 0.08f, rand() % 50 + 6815.0f, 280.0f));
 	//SnailVector.push_back(Enemy(&snail, sf::Vector2u(12, 8), 0.08f, rand() % 50 + 8928.0f, 564.0f));
 	//SnailVector.push_back(Enemy(&snail, sf::Vector2u(12, 8), 0.08f, rand() % 50 + 11580.0f, 564.0f));
@@ -118,7 +126,18 @@ int main()
 	platforms.push_back(Platform(nullptr, sf::Vector2f(1670.0f, 64.0f), sf::Vector2f(4165.0f, 688.0f)));
 	//platforms.push_back(Platform(&Gress, sf::Vector2f(2500.0f, 200.0f), sf::Vector2f(2500.0f, 800.0f)));
 	//platforms.push_back(Platform(&Din, sf::Vector2f(500.0f, 1000.0f), sf::Vector2f(-200.0f, 360.0f)));
-	platforms.push_back(Platform(nullptr, sf::Vector2f(275.0f, 37.0f), sf::Vector2f(10736.0f, 450.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(275.0f, 37.0f), sf::Vector2f(10734.0f, 461.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(210.0f, 37.0f), sf::Vector2f(11065.0f, 303.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(207.0f, 138.0f), sf::Vector2f(11170.0f, 583.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(280.0f, 23.0f), sf::Vector2f(11605.0f, 426.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(70.0f, 70.0f), sf::Vector2f(11430.0f, 403.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(70.0f, 70.0f), sf::Vector2f(11780.0f, 403.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(280.0f, 23.0f), sf::Vector2f(12411.0f, 371.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(70.0f, 70.0f), sf::Vector2f(12249.0f, 348.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(70.0f, 70.0f), sf::Vector2f(12577.0f, 348.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(70.0f, 70.0f), sf::Vector2f(11948.0f, 618.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(136.0f, 138.0f), sf::Vector2f(12053.0f, 583.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(210.0f, 37.0f), sf::Vector2f(12844.0f, 500.0f)));
 
 	platforms.push_back(Platform(nullptr, sf::Vector2f(5000.0f, 64.0f), sf::Vector2f(12500.0f, 688.0f)));
 
@@ -196,9 +215,18 @@ int main()
 		if (platform.GetCollider().CheckCollision(player.GetCollider(), direction, 1.0f))
 			player.OnCollision(direction);
 
+	for (int i = 0; i < SnailVector.size(); i++){
+		
+		for (Platform& platform : platforms)
+			if (platform.GetCollider().CheckCollision(SnailVector[i].GetCollider(), direction, 1.0f))
+				SnailVector[i].OnCollision(direction,deltaTime);
+	}
+	
+
 	window.clear();
 	//window.clear(sf::Color(221, 248, 255));
-
+	
+	//window.draw(background2);
 	for (Platform& platform : platforms)
 		platform.Draw(window);
 	window.draw(background);
@@ -305,10 +333,10 @@ int main()
 	{
 		view.setCenter(540.0f, 360.0f);
 	}
-	if (view.getCenter().x + 540.0f >= 5000.0f)
+	/*if (view.getCenter().x + 540.0f >= 5000.0f)
 	{
 		view.setCenter(4460.0f, 360.0f);
-	}
+	}*/
 	if (player.GetPosition().x >= 10000) {
 		if (view.getCenter().x - 540.0f <= 10000.0f) {
 			view.setCenter(10540.0f, 360.0f);
@@ -320,7 +348,7 @@ int main()
 
 
 
-	Score.setPosition({ view.getCenter().x - 200 ,100 });
+	Score.setPosition({ view.getCenter().x - 200 ,60 });
 
 	HP.setPosition({ view.getCenter().x - 200 ,20 });
 

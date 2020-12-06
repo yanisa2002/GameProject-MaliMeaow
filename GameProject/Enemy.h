@@ -15,6 +15,7 @@ public:
     //faceRight = true;
     void update2(float deltaTime, Player player);
     void draw(sf::RenderWindow& window);
+    void OnCollision(sf::Vector2f direction, float deltaTime);
     Collision GetCollider() { return Collision(body); }
 
     int hit()
