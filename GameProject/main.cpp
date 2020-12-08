@@ -5,6 +5,7 @@
 #include "Animation.h"
 #include "Player.h"
 #include "Platform.h"
+#include "Platform2.h"
 #include "Bullet.h"
 #include "Item.h"
 #include "time.h"
@@ -53,6 +54,11 @@ int main()
 	space2.loadFromFile("p/BG2.png");
 	background2.setTexture(&space2);
 
+	//Moving Platform 
+	sf::Texture MovPlat;
+	MovPlat.loadFromFile("p/gress.png");
+	std::vector <Platform2> MovPlatVector;
+
 	//Snail Enemy
 	sf::Texture snail;
 	snail.loadFromFile("p/snail.png");
@@ -63,6 +69,12 @@ int main()
 	sf::Texture ITEM;
 	ITEM.loadFromFile("p/coin.png");
 	std::vector <Item> itemVector;
+
+	//Moving Platform
+	MovPlatVector.push_back(Platform2(&MovPlat, sf::Vector2u(1, 1), 0.08f, 1510.0f, 305.0f));
+	MovPlatVector.push_back(Platform2(&MovPlat, sf::Vector2u(1, 1), 0.08f, 2477.0f, 290.0f));
+	MovPlatVector.push_back(Platform2(&MovPlat, sf::Vector2u(1, 1), 0.08f, 4050.0f, 350.0f));
+	MovPlatVector.push_back(Platform2(&MovPlat, sf::Vector2u(1, 1), 0.08f, 10415.0f, 360.0f));
 
 	//itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, (rand() % 1000 + 20), 560.0f));
 	//itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, (rand() % 1000 + 20), 400.0f));
@@ -222,7 +234,12 @@ int main()
 				SnailVector[i].OnCollision(direction,deltaTime);
 	}
 	
+	for (int i = 0; i < SnailVector.size(); i++) {
 
+		for (Platform2& platform2 : MovPlatVector)
+			if (platform2.GetCollider().CheckCollision(player.GetCollider(), direction, 1.0f))
+				player.OnCollision(direction);
+	}
 	window.clear();
 	//window.clear(sf::Color(221, 248, 255));
 	
@@ -265,6 +282,7 @@ int main()
 		}
 	}
 
+
 	if (player.GetPosition().x < 2107 && player.GetPosition().x > 1948 && player.GetPosition().y == 500)
 	{  
 		playerHP -= 100;
@@ -298,6 +316,13 @@ int main()
 		}
 	}
 	
+	for (int i = 0; i < MovPlatVector.size(); i++) {
+		MovPlatVector[i].draw(window);
+	}
+	
+	for (int i = 0; i < MovPlatVector.size(); i++) {
+		MovPlatVector[i].updateY(deltaTime);
+	}
 
 
 	for (int i = 0; i < SnailVector.size(); i++) {
