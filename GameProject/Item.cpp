@@ -28,6 +28,8 @@ void Item::update(float deltaTime, Player player)
     }
 }
 
+
+
 void Item::draw(sf::RenderWindow& window)
 {
     window.draw(body);

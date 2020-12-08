@@ -56,13 +56,19 @@ int main()
 
 	//Moving Platform 
 	sf::Texture MovPlat;
-	MovPlat.loadFromFile("p/gress.png");
+	MovPlat.loadFromFile("p/bridgeLogs.png");
 	std::vector <Platform2> MovPlatVector;
 
 	//Snail Enemy
 	sf::Texture snail;
 	snail.loadFromFile("p/snail.png");
 	std::vector <Enemy> SnailVector;
+
+	//addHP
+	//srand(time(NULL));
+	sf::Texture LUCK;
+	LUCK.loadFromFile("p/luck.png");
+	std::vector <Item> luckVector;
 
 	//Coin
 	srand(time(NULL));
@@ -74,7 +80,8 @@ int main()
 	MovPlatVector.push_back(Platform2(&MovPlat, sf::Vector2u(1, 1), 0.08f, 1510.0f, 305.0f));
 	MovPlatVector.push_back(Platform2(&MovPlat, sf::Vector2u(1, 1), 0.08f, 2477.0f, 290.0f));
 	MovPlatVector.push_back(Platform2(&MovPlat, sf::Vector2u(1, 1), 0.08f, 4050.0f, 350.0f));
-	MovPlatVector.push_back(Platform2(&MovPlat, sf::Vector2u(1, 1), 0.08f, 10415.0f, 360.0f));
+	MovPlatVector.push_back(Platform2(&MovPlat, sf::Vector2u(1, 1), 0.08f, 10315.0f, 360.0f));
+	MovPlatVector.push_back(Platform2(&MovPlat, sf::Vector2u(1, 1), 0.08f, 13135.0f, 300.0f));
 
 	//itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, (rand() % 1000 + 20), 560.0f));
 	//itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, (rand() % 1000 + 20), 400.0f));
@@ -97,11 +104,28 @@ int main()
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 3320.0f, 265.0f));
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 3566.0f, 430.0f));
 
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 10828.0f, 401.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 10863.0f, 351.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 10911.0f, 301.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 10940.0f, 239.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 11130.0f, 239.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 11248.0f, 239.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 11312.0f, 239.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 12140.0f, 239.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 12211.0f, 239.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 12375.0f, 239.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 12440.0f, 239.0f));
+	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 12515.0f, 239.0f));
+
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 1843.0f, 513.0f));
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 1880.0f, 480.0f));
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 1920.0f, 450.0f));
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 1960.0f, 420.0f));
 	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 2000.0f, 390.0f));
+
+	//addHP
+	luckVector.push_back(Item(&LUCK, sf::Vector2u(1, 1), 0.08f, 2461.0f, 200.0f));
+	luckVector.push_back(Item(&LUCK, sf::Vector2u(1, 1), 0.08f, 2370.0f, 200.0f));
 
 	//Snail
 	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 691.0f, 650.0f));
@@ -144,9 +168,9 @@ int main()
 	platforms.push_back(Platform(nullptr, sf::Vector2f(280.0f, 23.0f), sf::Vector2f(11605.0f, 426.0f)));
 	platforms.push_back(Platform(nullptr, sf::Vector2f(70.0f, 70.0f), sf::Vector2f(11430.0f, 403.0f)));
 	platforms.push_back(Platform(nullptr, sf::Vector2f(70.0f, 70.0f), sf::Vector2f(11780.0f, 403.0f)));
-	platforms.push_back(Platform(nullptr, sf::Vector2f(280.0f, 23.0f), sf::Vector2f(12411.0f, 371.0f)));
-	platforms.push_back(Platform(nullptr, sf::Vector2f(70.0f, 70.0f), sf::Vector2f(12249.0f, 348.0f)));
-	platforms.push_back(Platform(nullptr, sf::Vector2f(70.0f, 70.0f), sf::Vector2f(12577.0f, 348.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(280.0f, 23.0f), sf::Vector2f(12431.0f, 371.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(70.0f, 70.0f), sf::Vector2f(12269.0f, 348.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(70.0f, 70.0f), sf::Vector2f(12597.0f, 348.0f)));
 	platforms.push_back(Platform(nullptr, sf::Vector2f(70.0f, 70.0f), sf::Vector2f(11948.0f, 618.0f)));
 	platforms.push_back(Platform(nullptr, sf::Vector2f(136.0f, 138.0f), sf::Vector2f(12053.0f, 583.0f)));
 	platforms.push_back(Platform(nullptr, sf::Vector2f(210.0f, 37.0f), sf::Vector2f(12844.0f, 500.0f)));
@@ -282,6 +306,21 @@ int main()
 		}
 	}
 
+	for (int i = 0; i < luckVector.size(); i++) {
+		if (luckVector[i].GetCollider().CheckCollision(player.GetCollider())) {
+
+			//std::cout << "............................";
+			playerHP += 4000;
+			HP.setSize(sf::Vector2f(playerHP / 320.f, 15));
+			if (playerHP > 80000) {
+
+				playerHP =80000;
+				HP.setSize(sf::Vector2f(playerHP / 320.f, 15));
+			}
+			luckVector.erase(luckVector.begin() + i);
+		}
+	}
+
 
 	if (player.GetPosition().x < 2107 && player.GetPosition().x > 1948 && player.GetPosition().y == 500)
 	{  
@@ -327,6 +366,10 @@ int main()
 
 	for (int i = 0; i < SnailVector.size(); i++) {
 		SnailVector[i].draw(window);
+	}
+
+	for (int i = 0; i < luckVector.size(); i++) {
+		luckVector[i].draw(window);
 	}
 	// Alien
 	for (int i = 0; i < SnailVector.size(); i++) {

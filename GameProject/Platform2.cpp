@@ -28,7 +28,7 @@ void Platform2::updateX(float deltaTime)
         row = 1;
         this->direction = 1;
     }
-    else if (POSX > this->posiX + 100) {
+    else if (POSX > this->posiX + 200) {
         row = 3;
         this->direction = -1;
     }
@@ -45,7 +45,7 @@ void Platform2::updateY(float deltaTime)
         row = 0;
         this->direction = 1;
     }
-    else if (POSY > this->posiY + 100) {
+    else if (POSY > this->posiY + 200) {
         row = 2;
         this->direction = -1;
     }

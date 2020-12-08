@@ -11,6 +11,7 @@ public:
     Item(sf::Texture* texture, sf::Vector2u imageCount, float switchTime, float x, float y);
     ~Item();
     void update(float deltaTime, Player player);
+   
     void draw(sf::RenderWindow& window);
     Collision GetCollider() { return Collision(body); }
 
