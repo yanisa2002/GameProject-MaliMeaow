@@ -178,6 +178,7 @@ int main()
 	platforms.push_back(Platform(nullptr, sf::Vector2f(5000.0f, 64.0f), sf::Vector2f(12500.0f, 688.0f)));
 
 	int score = 0;
+	bool checkHP = true;
 
 	sf::Font font;
 	font.loadFromFile("p/kenvector_future.ttf");
@@ -188,250 +189,256 @@ int main()
 	Score.setFont(font);
 	Score.setFillColor(sf::Color::Red);
 
-	int count,Bul=0;
+	int count, Bul = 0;
 	float deltaTime = 0.0f;
 	sf::Clock clock;
 
 	while (window.isOpen()) {
 
-		count = player.GetPosition().x;
+		//while (checkHP == true) {
+			count = player.GetPosition().x;
 
-		deltaTime = clock.restart().asSeconds();
-		sf::Vector2f pos = player.GetPosition();
-		std::cout << pos.x << ' ' << pos.y << '\n';
+			deltaTime = clock.restart().asSeconds();
+			sf::Vector2f pos = player.GetPosition();
+			std::cout << pos.x << ' ' << pos.y << '\n';
 
-		//std::cout << deltaTime;
+			//std::cout << deltaTime;
 
-		/*deltaTime = clock.restart().asSeconds();
-		if (deltaTime > 1.0f / 20.0f)
-			deltaTime = 1.0f / 20.0f;
-*/
-		sf::Event evnt;
-		while (window.pollEvent(evnt)) {
-			switch (evnt.type) {
-			case sf::Event::Closed:
-				window.close();
-				break;
-			case sf::Event::Resized:
-				ResizeView(window, view);
-				//printf("New window width: %i New window height: %i\n", evnt.size.width, evnt.size.height);
-				break;
-				//case sf::Event::TextEntered:
-					//if (evnt.text.unicode < 128) {
-						//printf("%c\n", evnt.text.unicode);
-				//}
-		}
-
-	}
-		
-	
-	/*if (view.getCenter().x + 540.0f >= 5000.0f)
-	{
-		view.setCenter(4460.0f, 360.0f);
-	}
+			/*deltaTime = clock.restart().asSeconds();
+			if (deltaTime > 1.0f / 20.0f)
+				deltaTime = 1.0f / 20.0f;
 	*/
-	player.Update(deltaTime);
-
-	//if (pos.x > 5000) {
-	//	Score.setPosition(player.GetPosition().x - 110, 50);
-	//}
-
-	scoreText.str(" ");
-	scoreText << "SCORE: " << score;
-	Score.setString(scoreText.str());
-
-	sf::Vector2f direction;
-	Collision playerCollision = player.GetCollider();
-
-	//for (int i = 0; i < platforms.size(); i++) {
-	//	Platform& platform = platforms[i];
-	//}
-
-	for (Platform& platform : platforms)
-		if (platform.GetCollider().CheckCollision(player.GetCollider(), direction, 1.0f))
-			player.OnCollision(direction);
-
-	for (int i = 0; i < SnailVector.size(); i++){
-		
-		for (Platform& platform : platforms)
-			if (platform.GetCollider().CheckCollision(SnailVector[i].GetCollider(), direction, 1.0f))
-				SnailVector[i].OnCollision(direction,deltaTime);
-	}
-	
-	for (int i = 0; i < SnailVector.size(); i++) {
-
-		for (Platform2& platform2 : MovPlatVector)
-			if (platform2.GetCollider().CheckCollision(player.GetCollider(), direction, 1.0f))
-				player.OnCollision(direction);
-	}
-	window.clear();
-	//window.clear(sf::Color(221, 248, 255));
-	
-	//window.draw(background2);
-	for (Platform& platform : platforms)
-		platform.Draw(window);
-	window.draw(background);
-	window.draw(background2);
-
-	for (int i = 0; i < itemVector.size(); i++)
-	{
-		itemVector[i].draw(window);
-	}
-
-	for (int i = 0; i < itemVector.size(); i++)
-	{
-		itemVector[i].update(deltaTime, player);
-	}
-	for (int i = 0; i < itemVector.size(); i++)
-	{
-		if (itemVector[i].getpoint() == 1) {
-			score += 100;
-			
-
-		}
-	}
-	//platform.GetCollider().CheckCollision(player.GetCollider()
-	for (int i = 0; i < SnailVector.size(); i++) {
-		if (SnailVector[i].GetCollider().CheckCollision(player.GetCollider())) {
-
-			//std::cout << "............................";
-			playerHP -= 50;
-			HP.setSize(sf::Vector2f(playerHP / 320.f, 15));
-			if (playerHP < 0) {
-
-				playerHP = 0;
+			sf::Event evnt;
+			while (window.pollEvent(evnt)) {
+				switch (evnt.type) {
+				case sf::Event::Closed:
+					window.close();
+					break;
+				case sf::Event::Resized:
+					ResizeView(window, view);
+					//printf("New window width: %i New window height: %i\n", evnt.size.width, evnt.size.height);
+					break;
+					//case sf::Event::TextEntered:
+						//if (evnt.text.unicode < 128) {
+							//printf("%c\n", evnt.text.unicode);
+					//}
+				}
 
 			}
 
-		}
-	}
 
-	for (int i = 0; i < luckVector.size(); i++) {
-		if (luckVector[i].GetCollider().CheckCollision(player.GetCollider())) {
+			/*if (view.getCenter().x + 540.0f >= 5000.0f)
+			{
+				view.setCenter(4460.0f, 360.0f);
+			}
+			*/
+			player.Update(deltaTime);
 
-			//std::cout << "............................";
-			playerHP += 4000;
-			HP.setSize(sf::Vector2f(playerHP / 320.f, 15));
-			if (playerHP > 80000) {
+			//if (pos.x > 5000) {
+			//	Score.setPosition(player.GetPosition().x - 110, 50);
+			//}
 
-				playerHP =80000;
+			scoreText.str(" ");
+			scoreText << "SCORE: " << score;
+			Score.setString(scoreText.str());
+
+			sf::Vector2f direction;
+			Collision playerCollision = player.GetCollider();
+
+			//for (int i = 0; i < platforms.size(); i++) {
+			//	Platform& platform = platforms[i];
+			//}
+
+			for (Platform& platform : platforms)
+				if (platform.GetCollider().CheckCollision(player.GetCollider(), direction, 1.0f))
+					player.OnCollision(direction);
+
+			for (int i = 0; i < SnailVector.size(); i++) {
+
+				for (Platform& platform : platforms)
+					if (platform.GetCollider().CheckCollision(SnailVector[i].GetCollider(), direction, 1.0f))
+						SnailVector[i].OnCollision(direction, deltaTime);
+			}
+
+			for (int i = 0; i < SnailVector.size(); i++) {
+
+				for (Platform2& platform2 : MovPlatVector)
+					if (platform2.GetCollider().CheckCollision(player.GetCollider(), direction, 1.0f))
+						player.OnCollision(direction);
+			}
+			window.clear();
+			//window.clear(sf::Color(221, 248, 255));
+
+			//window.draw(background2);
+			for (Platform& platform : platforms)
+				platform.Draw(window);
+			window.draw(background);
+			window.draw(background2);
+
+			for (int i = 0; i < itemVector.size(); i++)
+			{
+				itemVector[i].draw(window);
+			}
+
+			for (int i = 0; i < itemVector.size(); i++)
+			{
+				itemVector[i].update(deltaTime, player);
+			}
+			for (int i = 0; i < itemVector.size(); i++)
+			{
+				if (itemVector[i].getpoint() == 1) {
+					score += 100;
+
+
+				}
+			}
+			//platform.GetCollider().CheckCollision(player.GetCollider()
+			for (int i = 0; i < SnailVector.size(); i++) {
+				if (SnailVector[i].GetCollider().CheckCollision(player.GetCollider())) {
+
+					//std::cout << "............................";
+					playerHP -= 50;
+					HP.setSize(sf::Vector2f(playerHP / 320.f, 15));
+					if (playerHP < 0) {
+
+						playerHP = 0;
+						checkHP = false;
+
+					}
+
+				}
+			}
+
+			for (int i = 0; i < luckVector.size(); i++) {
+				if (luckVector[i].GetCollider().CheckCollision(player.GetCollider())) {
+
+					//std::cout << "............................";
+					playerHP += 4000;
+					HP.setSize(sf::Vector2f(playerHP / 320.f, 15));
+					if (playerHP > 80000) {
+
+						playerHP = 80000;
+						HP.setSize(sf::Vector2f(playerHP / 320.f, 15));
+					}
+					luckVector.erase(luckVector.begin() + i);
+				}
+			}
+
+
+			if (player.GetPosition().x < 2107 && player.GetPosition().x > 1948 && player.GetPosition().y == 500)
+			{
+				playerHP -= 100;
 				HP.setSize(sf::Vector2f(playerHP / 320.f, 15));
+				if (playerHP < 0) {
+
+					playerHP = 0;
+
+				}
 			}
-			luckVector.erase(luckVector.begin() + i);
+
+			if (player.GetPosition().x < 3330 && player.GetPosition().x > 3183 && player.GetPosition().y == 588)
+			{
+				playerHP -= 100;
+				HP.setSize(sf::Vector2f(playerHP / 320.f, 15));
+				if (playerHP < 0) {
+
+					playerHP = 0;
+
+				}
+			}
+
+			if (player.GetPosition().x < 1311 && player.GetPosition().x > 1170 && player.GetPosition().y == 588)
+			{
+				playerHP -= 100;
+				HP.setSize(sf::Vector2f(playerHP / 320.f, 15));
+				if (playerHP < 0) {
+
+					playerHP = 0;
+
+				}
+			}
+
+			for (int i = 0; i < MovPlatVector.size(); i++) {
+				MovPlatVector[i].draw(window);
+			}
+
+			for (int i = 0; i < MovPlatVector.size(); i++) {
+				MovPlatVector[i].updateY(deltaTime);
+			}
+
+
+			for (int i = 0; i < SnailVector.size(); i++) {
+				SnailVector[i].draw(window);
+			}
+
+			for (int i = 0; i < luckVector.size(); i++) {
+				luckVector[i].draw(window);
+			}
+			// Alien
+			for (int i = 0; i < SnailVector.size(); i++) {
+				//SnailVector[i].update1(deltaTime, bullet1);
+				SnailVector[i].update2(deltaTime, player);
+			}
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
+			{
+
+				bullet1.attack(pos);
+				Bul = 1;
+			}
+			if (Bul == 1)
+			{
+				bullet1.update(deltaTime);
+				bullet1.draw(window);
+
+			}
+			if (player.GetPosition().x - bullet1.GetPosition().x <= -1000.0f)
+			{
+				Bul = 0;
+				bullet1.isAvaliable();
+			}
+
+			view.setCenter(player.GetPosition().x, 360.0f);
+
+			if (view.getCenter().x - 540.0f <= 0.0f)
+			{
+				view.setCenter(540.0f, 360.0f);
+			}
+			/*if (view.getCenter().x + 540.0f >= 5000.0f)
+			{
+				view.setCenter(4460.0f, 360.0f);
+			}*/
+			if (player.GetPosition().x >= 10000) {
+				if (view.getCenter().x - 540.0f <= 10000.0f) {
+					view.setCenter(10540.0f, 360.0f);
+				}
+			}
+			if (view.getCenter().x + 540.0f >= 15000.0f) {
+				view.setCenter(14460.0f, 360.0f);
+			}
+
+
+
+			Score.setPosition({ view.getCenter().x - 200 ,60 });
+
+			HP.setPosition({ view.getCenter().x - 200 ,20 });
+
+			//platform1.GetCollider().CheckCollision(player.GetCollider(), 0.5f);
+			//platform2.GetCollider().CheckCollision(player.GetCollider(), 1.0f);
+
+			//view.setCenter(player.GetPosition());
+			window.setView(view);
+			//bullet1.draw(window);
+			player.Draw(window);
+			window.draw(Score);
+			window.draw(HP);
+			//platform2.Draw(window);
+			//window.draw(player);
+			if (checkHP == false) {
+				window.close();
+			}
+		//}
+			window.display();
 		}
-	}
-
-
-	if (player.GetPosition().x < 2107 && player.GetPosition().x > 1948 && player.GetPosition().y == 500)
-	{  
-		playerHP -= 100;
-		HP.setSize(sf::Vector2f(playerHP / 320.f, 15));
-		if (playerHP < 0) {
-
-			playerHP = 0;
-
-		}
-	}
-
-	if (player.GetPosition().x < 3330 && player.GetPosition().x > 3183 && player.GetPosition().y == 588)
-	{
-		playerHP -= 100;
-		HP.setSize(sf::Vector2f(playerHP / 320.f, 15));
-		if (playerHP < 0) {
-
-			playerHP = 0;
-
-		}
-	}
-
-	if (player.GetPosition().x < 1311 && player.GetPosition().x > 1170 && player.GetPosition().y == 588)
-	{
-		playerHP -= 100;
-		HP.setSize(sf::Vector2f(playerHP / 320.f, 15));
-		if (playerHP < 0) {
-		
-			playerHP = 0;
-		  
-		}
-	}
-	
-	for (int i = 0; i < MovPlatVector.size(); i++) {
-		MovPlatVector[i].draw(window);
-	}
-	
-	for (int i = 0; i < MovPlatVector.size(); i++) {
-		MovPlatVector[i].updateY(deltaTime);
-	}
-
-
-	for (int i = 0; i < SnailVector.size(); i++) {
-		SnailVector[i].draw(window);
-	}
-
-	for (int i = 0; i < luckVector.size(); i++) {
-		luckVector[i].draw(window);
-	}
-	// Alien
-	for (int i = 0; i < SnailVector.size(); i++) {
-		//SnailVector[i].update1(deltaTime, bullet1);
-		SnailVector[i].update2(deltaTime, player);
-	}
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
-	{
-
-		bullet1.attack(pos);
-		Bul = 1;
-	}
-	if (Bul == 1)
-	{  
-		bullet1.update(deltaTime);
-		bullet1.draw(window);
-		
-	}
-	if (player.GetPosition().x - bullet1.GetPosition().x <= -1000.0f)
-	{
-		Bul = 0;
-		bullet1.isAvaliable();
-	}
-
-	view.setCenter(player.GetPosition().x, 360.0f);
-
-	if (view.getCenter().x - 540.0f <= 0.0f)
-	{
-		view.setCenter(540.0f, 360.0f);
-	}
-	/*if (view.getCenter().x + 540.0f >= 5000.0f)
-	{
-		view.setCenter(4460.0f, 360.0f);
-	}*/
-	if (player.GetPosition().x >= 10000) {
-		if (view.getCenter().x - 540.0f <= 10000.0f) {
-			view.setCenter(10540.0f, 360.0f);
-		}
-	}
-	if (view.getCenter().x + 540.0f >= 15000.0f) {
-		view.setCenter(14460.0f, 360.0f);
-	}
-
-
-
-	Score.setPosition({ view.getCenter().x - 200 ,60 });
-
-	HP.setPosition({ view.getCenter().x - 200 ,20 });
-
-	//platform1.GetCollider().CheckCollision(player.GetCollider(), 0.5f);
-	//platform2.GetCollider().CheckCollision(player.GetCollider(), 1.0f);
-
-	//view.setCenter(player.GetPosition());
-	window.setView(view);
-	//bullet1.draw(window);
-	player.Draw(window);
-	window.draw(Score);
-	window.draw(HP);
-	//platform2.Draw(window);
-	//window.draw(player);
-	window.display();
-	}
-	return 0;
+		return 0;
 }
