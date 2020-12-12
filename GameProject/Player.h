@@ -25,6 +25,7 @@ private:
 	float speed;
 	bool faceRight;
 	bool bullet;
+	bool slide;
 
 	sf::Vector2f velocity;
 	bool canJump;
