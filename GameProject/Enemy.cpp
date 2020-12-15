@@ -4,7 +4,10 @@
 Enemy::Enemy(sf::Texture* texture, sf::Vector2u imageCount, float switchTime, float x, float y) :
     animation(texture, imageCount, switchTime)
 {
+    this->posiX = x;
+    this->posiY = y;
     this->speed = speed;
+    this->direction = 1;
     row = 0;
     body.setSize(sf::Vector2f(110.0f, 90.0f));
     body.setOrigin(body.getSize() / 2.0f);
@@ -59,6 +62,25 @@ void Enemy::update2(float deltaTime, Player player)
         body.setTextureRect(animation.uvRect);
     }
 
+}
+
+void Enemy::updateX(float deltaTime)
+{
+   // body.setSize(sf::Vector2f(110.0f, 90.0f));
+    float POSX = body.getPosition().x;
+    velocity.y = 0;
+    velocity.x = 80;
+    if (POSX < this->posiX) {
+        faceRight =false;
+        this->direction = 1;
+    }
+    else if (POSX > this->posiX + 200) {
+        faceRight = true;
+        this->direction = -1;
+    }
+    body.move(this->direction * velocity * deltaTime);
+    animation.update(row, deltaTime, faceRight);
+    body.setTextureRect(animation.uvRect);
 }
 
 void Enemy::OnCollision(sf::Vector2f direction, float deltaTime)

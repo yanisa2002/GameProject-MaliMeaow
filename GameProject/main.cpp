@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <vector>
 #include <iostream>
 #include <sstream>
@@ -128,6 +129,11 @@ int main()
 	snail.loadFromFile("p/snail.png");
 	std::vector <Enemy> SnailVector;
 
+	//Snail Enemy moving
+	sf::Texture snailMov;
+	snailMov.loadFromFile("p/snail.png");
+	std::vector <Enemy> SnailMovVector;
+
 	//addHP
 	//srand(time(NULL));
 	sf::Texture LUCK;
@@ -146,6 +152,25 @@ int main()
 	sf::Texture score_game;
 	score_game.loadFromFile("p/score.png");
 	scoreEndGame.setTexture(&score_game);
+
+	//-----------------------------------------MUSIC SOUND-----------------------------------------//
+	//soundmenu
+	sf::Music music;
+	music.openFromFile("p/Swinging Pants.ogg");
+	music.setLoop(true);
+	music.setVolume(20.f);
+
+	//soundclick
+	sf::SoundBuffer soundc;
+	soundc.loadFromFile("p/click.WAV");
+	sf::Sound Soundch;
+	Soundch.setBuffer(soundc);
+
+	//sound cat attact
+	sf::SoundBuffer soundcat;
+	soundcat.loadFromFile("p/cat.WAV");
+	sf::Sound Soundcat;
+	Soundcat.setBuffer(soundcat);
 
 	//Moving Platform
 	MovPlatVector.push_back(Platform2(&MovPlat, sf::Vector2u(1, 1), 0.08f, 1510.0f, 305.0f));
@@ -210,6 +235,12 @@ int main()
 	luckVector.push_back(Item(&LUCK, sf::Vector2u(1, 1), 0.08f, 4032.0f, 250.0f));
 	luckVector.push_back(Item(&LUCK, sf::Vector2u(1, 1), 0.08f, 12841.0f, 200.0f));
 
+	//Snail Moving
+	SnailMovVector.push_back(Enemy(&snailMov, sf::Vector2u(2, 1), 0.08f, 11505.0f, 370.0f));
+	SnailMovVector.push_back(Enemy(&snailMov, sf::Vector2u(2, 1), 0.08f, 12325.0f, 320.0f));
+	SnailMovVector.push_back(Enemy(&snailMov, sf::Vector2u(2, 1), 0.08f, 11310.0f, 605.0f));
+	SnailMovVector.push_back(Enemy(&snailMov, sf::Vector2u(2, 1), 0.08f, 12325.0f, 605.0f));
+
 	//Snail
 	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, (rand() % 1000 + 20), 650.0f));
 	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, (rand() % 1000 + 20), 650.0f));
@@ -218,7 +249,7 @@ int main()
 	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 3650.0f, 650.0f));
 	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 4000.0f, 650.0f));
 
-	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 11587.0f, 376.0f));
+	//SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 11587.0f, 376.0f));
 	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, (rand() % 1000 + 12000), 650.0f));
 	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, (rand() % 1000 + 12000), 650.0f));
 	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, (rand() % 1000 + 13000), 650.0f));
@@ -311,6 +342,7 @@ int main()
 	sf::Clock timercoli;
 
 	while (window.isOpen()) {
+		music.play();
 		while (menu == true)
 		{
 			sf::Event event;
@@ -338,7 +370,7 @@ int main()
 			{
 				window.draw(playMENU);
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-					//Soundch.play();
+					Soundch.play();
 					menu = false;
 					start = true;
 					//MemScore = true;
@@ -365,7 +397,7 @@ int main()
 			{
 				window.draw(exitMENU);
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-					//Soundch.play();
+					Soundch.play();
 					window.close();
 					break;
 				}
@@ -458,19 +490,31 @@ int main()
 			//platform.GetCollider().CheckCollision(player.GetCollider()
 			for (int i = 0; i < SnailVector.size(); i++) {
 				if (SnailVector[i].GetCollider().CheckCollision(player.GetCollider())) {
-
+					Soundcat.play();
 					//std::cout << "............................";
 					playerHP -= 50;
 					HP.setSize(sf::Vector2f(playerHP / 320.f, 15));
 					checkColi = true;
 					q = 0;
 					if (playerHP < 0) {
-
 						playerHP = 0;
 						checkHP = true;
-
 					}
+				}
+			}
 
+			for (int i = 0; i < SnailMovVector.size(); i++) {
+				if (SnailMovVector[i].GetCollider().CheckCollision(player.GetCollider())) {
+					Soundcat.play();
+					//std::cout << "............................";
+					playerHP -= 50;
+					HP.setSize(sf::Vector2f(playerHP / 320.f, 15));
+					checkColi = true;
+					q = 0;
+					if (playerHP < 0) {
+						playerHP = 0;
+						checkHP = true;
+					}
 				}
 			}
 
@@ -488,6 +532,10 @@ int main()
 
 				for (int i = 0; i < MovPlatVector.size(); i++) {
 					MovPlatVector[i].updateY(deltaTime);
+				}
+
+				for (int i = 0; i < SnailMovVector.size(); i++) {
+					SnailMovVector[i].updateX(deltaTime);
 				}
 
 				player.Update(deltaTime);
@@ -511,6 +559,7 @@ int main()
 			// check nharm
 			if (player.GetPosition().x < 2107 && player.GetPosition().x > 1948 && player.GetPosition().y >= 500 && player.GetPosition().y <= 502)
 			{
+				Soundcat.play();
 				playerHP -= 100;
 				HP.setSize(sf::Vector2f(playerHP / 320.f, 15));
 				checkColi = true;
@@ -524,6 +573,7 @@ int main()
 
 			if (player.GetPosition().x < 3330 && player.GetPosition().x > 3183 && player.GetPosition().y == 588)
 			{
+				Soundcat.play();
 				playerHP -= 100;
 				HP.setSize(sf::Vector2f(playerHP / 320.f, 15));
 				checkColi = true;
@@ -537,6 +587,7 @@ int main()
 
 			if (player.GetPosition().x < 1311 && player.GetPosition().x > 1170 && player.GetPosition().y == 588)
 			{
+				Soundcat.play();
 				playerHP -= 100;
 				HP.setSize(sf::Vector2f(playerHP / 320.f, 15));
 				checkColi = true;
@@ -548,8 +599,9 @@ int main()
 				}
 			}
 
-			if (player.GetPosition().x < 10806 && player.GetPosition().x > 10665 && player.GetPosition().y == 547)
+			if (player.GetPosition().x < 10806 && player.GetPosition().x > 10665 && player.GetPosition().y >= 530 && player.GetPosition().y <= 547)
 			{
+				Soundcat.play();
 				playerHP -= 500;
 				HP.setSize(sf::Vector2f(playerHP / 320.f, 15));
 				checkColi = true;
@@ -563,6 +615,7 @@ int main()
 
 			if (player.GetPosition().x < 11096 && player.GetPosition().x > 11029 && player.GetPosition().y < 400 && player.GetPosition().y > 395)
 			{
+				Soundcat.play();
 				playerHP -= 500;
 				HP.setSize(sf::Vector2f(playerHP / 320.f, 15));
 				checkColi = true;
@@ -576,6 +629,10 @@ int main()
 
 			for (int i = 0; i < MovPlatVector.size(); i++) {
 				MovPlatVector[i].draw(window);
+			}
+
+			for (int i = 0; i < SnailMovVector.size(); i++) {
+				SnailMovVector[i].draw(window);
 			}
 
 			for (int i = 0; i < SnailVector.size(); i++) {
@@ -679,7 +736,7 @@ int main()
 					pauseResumeGame.setPosition(view.getCenter().x - 540, 0);
 					window.draw(pauseResumeGame);
 					if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-						//Soundch.play();
+						Soundch.play();
 						pause = false;
 						//menu = false;
 						//start = true;
@@ -695,7 +752,7 @@ int main()
 					window.draw(pauseExitGame);
 					if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 					{
-						//Soundch.play();
+						Soundch.play();
 						start = false;
 						menu = true;
 						MENU.setPosition(view.getCenter().x - 540, 0.0f);
@@ -729,7 +786,7 @@ int main()
 					sf::Mouse::getPosition(window).y <= 568)
 				{
 					if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-
+						Soundch.play();
 						window.close();
 
 					}

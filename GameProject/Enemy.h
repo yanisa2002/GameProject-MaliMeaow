@@ -13,6 +13,7 @@ public:
     ~Enemy();
     //void update1(float deltaTime, Bullet bullet1);
     //faceRight = true;
+    void updateX(float deltaTime);
     void update2(float deltaTime, Player player);
     void draw(sf::RenderWindow& window);
     void OnCollision(sf::Vector2f direction, float deltaTime);
@@ -41,6 +42,8 @@ private:
     int x1 = 0;
     bool faceRight;
     float speed;
+    float posiX, posiY;
+    float direction;
     sf::RectangleShape body;
     Animation animation;
     sf::Vector2f velocity;

@@ -25,11 +25,11 @@ void Platform2::updateX(float deltaTime)
     velocity.y = 0;
     velocity.x = 80;
     if (POSX < this->posiX) {
-        row = 1;
+        //row = 1;
         this->direction = 1;
     }
     else if (POSX > this->posiX + 200) {
-        row = 3;
+        //row = 3;
         this->direction = -1;
     }
     body.move(this->direction * velocity * deltaTime);
@@ -42,11 +42,11 @@ void Platform2::updateY(float deltaTime)
     velocity.y = 80;
     velocity.x = 0;
     if (POSY < this->posiY) {
-        row = 0;
+        //row = 0;
         this->direction = 1;
     }
     else if (POSY > this->posiY + 200) {
-        row = 2;
+        //row = 2;
         this->direction = -1;
     }
     body.move(0, this->direction * velocity.y * deltaTime);

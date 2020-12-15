@@ -80,7 +80,7 @@ void Player::Update(float deltaTime)
 
 
 
-	if (body.getPosition().x >= 4300 && body.getPosition().x <= 4375) {
+	if (body.getPosition().x >= 4350 && body.getPosition().x <= 4375) {
 
 		body.setPosition(10500, body.getPosition().y);
 
