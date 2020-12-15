@@ -1,8 +1,12 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
 #include <vector>
+#include <string>
 #include <iostream>
 #include <sstream>
+#include"stdlib.h"
+#include <fstream>
 #include "Animation.h"
 #include "Player.h"
 #include "Platform.h"
@@ -172,6 +176,92 @@ int main()
 	sf::Sound Soundcat;
 	Soundcat.setBuffer(soundcat);
 
+	//sound coin
+	sf::SoundBuffer soundcoin;
+	soundcoin.loadFromFile("p/coin.WAV");
+	sf::Sound Soundcoin;
+	Soundcoin.setBuffer(soundcoin);
+
+	sf::Font font;
+	font.loadFromFile("p/kenvector_future.ttf");
+	std::ostringstream scoreText;
+	sf::Text Score;
+	Score.setCharacterSize(60);
+	Score.setString(scoreText.str());
+	Score.setFont(font);
+	Score.setFillColor(sf::Color::Red);
+
+	///Score when end////
+	sf::Font font1;
+	font1.loadFromFile("p/kenvector_future.ttf");
+	ostringstream point1;
+	sf::Text coinScore;
+	coinScore.setCharacterSize(50);
+	coinScore.setString(point1.str());
+	coinScore.setFont(font1);
+	coinScore.setFillColor(sf::Color::White);
+
+	///coin Score
+	sf::Font font2;
+	font2.loadFromFile("p/kenvector_future.ttf");
+	ostringstream point2;
+	sf::Text LastScore;
+	LastScore.setCharacterSize(70);
+	LastScore.setString(point2.str());
+	LastScore.setFont(font2);
+	LastScore.setFillColor(sf::Color::White);
+
+	///HP Score
+	sf::Font font3;
+	font3.loadFromFile("p/kenvector_future.ttf");
+	ostringstream point3;
+	sf::Text hpScore;
+	hpScore.setCharacterSize(70);
+	hpScore.setString(point2.str());
+	hpScore.setFont(font3);
+	hpScore.setFillColor(sf::Color::White);
+
+	// Adding name///
+	sf::String playerInput;
+	std::ofstream fileWriter;
+	std::ostringstream keyname;
+	sf::Text Keyname;
+	std::string user_Name;
+	fstream adminFile;
+	Keyname.setCharacterSize(40);
+	Keyname.setString(" ");
+	Keyname.setFont(font);
+	Keyname.setFillColor(sf::Color::Black);
+	char last_char = ' ';
+	sf::RectangleShape cursor;
+	cursor.setSize(sf::Vector2f(5.0f, 30.0f));
+	cursor.setOrigin(sf::Vector2f(2.5f, 15.0f));
+	cursor.setFillColor(sf::Color::Black);
+	sf::Text text("", font);
+
+
+	std::map<int, std::string> save_score;
+	std::ifstream Opentext;
+	std::string list;
+
+	Keyname.setPosition(300, 500);
+	text.setFillColor(sf::Color::Black);
+	text.setPosition(545, 535);
+	cursor.setPosition(545.0f + text.getGlobalBounds().width + 10, 555.0f);
+	float totalTime_cursor = 0;
+	sf::Clock clock_cursor;
+	bool state_cursor = false;
+
+
+	
+
+	///Menu_keyname////
+	sf::RectangleShape addName(sf::Vector2f(1080.0f, 720.0f));
+	addName.setPosition(0.0f, 0.0f);
+	sf::Texture addName_1;
+	//addName_1.loadFromFile("pic/Keyname.png");
+	addName.setTexture(&addName_1);
+
 	//Moving Platform
 	MovPlatVector.push_back(Platform2(&MovPlat, sf::Vector2u(1, 1), 0.08f, 1510.0f, 305.0f));
 	MovPlatVector.push_back(Platform2(&MovPlat, sf::Vector2u(1, 1), 0.08f, 2477.0f, 290.0f));
@@ -182,77 +272,7 @@ int main()
 
 	//itemVector.push_back(Item(&ITEM, sf::Vector2u(8, 1), 0.08f, (rand() % 1000 + 20), 560.0f));
 	//itemVector.push_back(Item(&ITEM, sf::Vector2u(6, 1), 0.08f, (rand() % 1000 + 20), 400.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 641.0f, 560.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 691.0f, 560.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 741.0f, 560.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 791.0f, 560.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 900.0f, 280.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 950.0f, 280.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 1000.0f, 280.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 1050.0f, 280.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 2535.0f, 600.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 2585.0f, 600.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 2635.0f, 600.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 2685.0f, 600.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 2735.0f, 600.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 3170.0f, 265.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 3220.0f, 265.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 3270.0f, 265.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 3320.0f, 265.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 3566.0f, 430.0f));
-
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 10828.0f, 401.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 10863.0f, 351.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 10911.0f, 301.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 10940.0f, 239.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 11130.0f, 239.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 11248.0f, 239.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 11312.0f, 239.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 12140.0f, 239.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 12211.0f, 239.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 12375.0f, 239.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 12440.0f, 239.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 12515.0f, 239.0f));
-
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 1843.0f, 513.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 1880.0f, 480.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 1920.0f, 450.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 1960.0f, 420.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 2000.0f, 390.0f));
-
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 11534.0f, 560.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 11628.0f, 500.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 11691.0f, 500.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 11793.0f, 560.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 13378.0f, 210.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 13495.0f, 210.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 13605.0f, 210.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 13712.0f, 210.0f));
-	itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 13809.0f, 210.0f));
-
-	//addHP
-	luckVector.push_back(Item(&LUCK, sf::Vector2u(1, 1), 0.08f, 2461.0f, 200.0f));
-	luckVector.push_back(Item(&LUCK, sf::Vector2u(1, 1), 0.08f, 4032.0f, 250.0f));
-	luckVector.push_back(Item(&LUCK, sf::Vector2u(1, 1), 0.08f, 12841.0f, 200.0f));
-
-	//Snail Moving
-	SnailMovVector.push_back(Enemy(&snailMov, sf::Vector2u(2, 1), 0.08f, 11505.0f, 370.0f));
-	SnailMovVector.push_back(Enemy(&snailMov, sf::Vector2u(2, 1), 0.08f, 12325.0f, 320.0f));
-	SnailMovVector.push_back(Enemy(&snailMov, sf::Vector2u(2, 1), 0.08f, 11310.0f, 605.0f));
-	SnailMovVector.push_back(Enemy(&snailMov, sf::Vector2u(2, 1), 0.08f, 12325.0f, 605.0f));
-
-	//Snail
-	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, (rand() % 1000 + 20), 650.0f));
-	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, (rand() % 1000 + 20), 650.0f));
-	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 1520.0f, 650.0f));
-	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 2700.0f, 650.0f));
-	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 3650.0f, 650.0f));
-	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 4000.0f, 650.0f));
-
-	//SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 11587.0f, 376.0f));
-	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, (rand() % 1000 + 12000), 650.0f));
-	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, (rand() % 1000 + 12000), 650.0f));
-	SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, (rand() % 1000 + 13000), 650.0f));
+	
 	//SnailVector.push_back(Enemy(&snail, sf::Vector2u(12, 8), 0.08f, rand() % 50 + 6815.0f, 280.0f));
 	//SnailVector.push_back(Enemy(&snail, sf::Vector2u(12, 8), 0.08f, rand() % 50 + 8928.0f, 564.0f));
 	//SnailVector.push_back(Enemy(&snail, sf::Vector2u(12, 8), 0.08f, rand() % 50 + 11580.0f, 564.0f));
@@ -298,43 +318,23 @@ int main()
 
 	platforms.push_back(Platform(nullptr, sf::Vector2f(5000.0f, 64.0f), sf::Vector2f(12500.0f, 688.0f)));
 
+	
+
+
+
+	int loop = 0;
 	int score = 0;
 	int q = 0;
+	float counTime = 0;
 	bool checkHP = false;
 	bool checkDraw = false;
 	bool checkColi = false;
 	bool pause = false;
 	bool menu = true;
 	bool start = false;
-
-	sf::Font font;
-	font.loadFromFile("p/kenvector_future.ttf");
-	std::ostringstream scoreText;
-	sf::Text Score;
-	Score.setCharacterSize(60);
-	Score.setString(scoreText.str());
-	Score.setFont(font);
-	Score.setFillColor(sf::Color::Red);
-
-	///Score when end////
-	sf::Font font1;
-	font1.loadFromFile("p/kenvector_future.ttf");
-	ostringstream point1;
-	sf::Text coinScore;
-	coinScore.setCharacterSize(50);
-	coinScore.setString(point1.str());
-	coinScore.setFont(font1);
-	coinScore.setFillColor(sf::Color::White);
-
-	///coin Score
-	sf::Font font2;
-	font2.loadFromFile("p/kenvector_future.ttf");
-	ostringstream point2;
-	sf::Text LastScore;
-	LastScore.setCharacterSize(70);
-	LastScore.setString(point2.str());
-	LastScore.setFont(font2);
-	LastScore.setFillColor(sf::Color::White);
+	bool endGame = false;
+	bool memName = false;
+	bool highSCore = false;
 
 	int count, Bul = 0;
 	float deltaTime = 0.0f;
@@ -342,6 +342,9 @@ int main()
 	sf::Clock timercoli;
 
 	while (window.isOpen()) {
+
+		
+
 		music.play();
 		while (menu == true)
 		{
@@ -372,8 +375,10 @@ int main()
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 					Soundch.play();
 					menu = false;
-					start = true;
-					//MemScore = true;
+					start = false;
+					memName = true;
+					highSCore = false;
+					music.stop();
 				}
 			}
 			else if (sf::Mouse::getPosition(window).x >= 717 &&
@@ -385,9 +390,9 @@ int main()
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 				{
 					//Soundch.play();
-					//MENU = false;
-					//START = false;
-					//Rank = true;
+					menu = false;
+					start = false;
+					highSCore = true;
 				}
 			}
 			else if (sf::Mouse::getPosition(window).x >= 717 &&
@@ -405,7 +410,224 @@ int main()
 			window.display();
 		}
 
+
+
+		while (highSCore == true) {
+
+			if (loop == 0) {
+				view.setCenter(540, 360);
+			}
+			sf::Vector2f mouesPosition = sf::Vector2f(0.0f, 0.0f);
+			mouesPosition = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+			cout << sf::Mouse::getPosition(window).x << " " << sf::Mouse::getPosition(window).y << endl;
+
+			window.clear();
+			//window.draw(hh);
+			sf::Text text1("", font);
+			text1.setCharacterSize(30);
+			text1.setFillColor(sf::Color::White);
+			Opentext.open("p/highscore.txt");
+			do {
+				Opentext >> list;
+				std::string first_token = list.substr(0, list.find(','));
+				int second_token = std::stoi(list.substr(list.find(',') + 1, list.length()));
+				save_score[second_token] = first_token;
+			} while (Opentext.good());
+
+			Opentext.close();
+			std::map<int, std::string>::iterator end = save_score.end();
+			std::map<int, std::string>::iterator beg = save_score.begin();
+			end--;
+			beg--;
+			int currentDisplay = 0;
+			for (std::map<int, std::string>::iterator it = end; it != beg; it--) {
+				text1.setString(it->second);
+				text1.setPosition(view.getCenter().x - 170, 210 + 80 * currentDisplay);
+				window.draw(text1);
+				text1.setString(std::to_string(it->first));
+				text1.setPosition(view.getCenter().x + 95, 210 + 80 * currentDisplay);
+				window.draw(text1);
+				currentDisplay++;
+				if (currentDisplay == 5)
+				{
+					break;
+				}
+			}
+			/*if (sf::Mouse::getPosition(window).x >= 416 &&
+				sf::Mouse::getPosition(window).y >= 636 &&
+				sf::Mouse::getPosition(window).x <= 665 &&
+				sf::Mouse::getPosition(window).y <= 685)
+			{*/
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+				{
+					//Soundch.play();
+					highSCore = false;
+					menu = true;
+				}
+			//}
+			window.display();
+		}
+
+		/////////////////////////////
+		while (memName == true) {
+
+			counTime += deltaTime;
+			sf::Event event;
+			while (window.pollEvent(event)) {
+				switch (event.type)
+				{
+				case sf::Event::Closed:
+					window.close();
+					break;
+				}
+			}
+
+			if (event.type == sf::Event::TextEntered && last_char != event.text.unicode)
+			{
+				if (event.text.unicode == 13) { //enter
+					user_Name = playerInput;
+					playerInput.clear();
+					menu = true;
+
+				}
+				else if (event.text.unicode == 8 && playerInput.getSize() > 0) { // backspace delete
+					playerInput = playerInput.substring(0, playerInput.getSize() - 1);
+				}
+				else {
+					if (playerInput.getSize() < 10) {
+						if (counTime > 0.2) {
+							playerInput += event.text.unicode;
+							counTime = 0;
+						}
+					}
+				}
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+					menu = false;					
+					memName = false;
+					start = true;
+					highSCore = false;
+					//part1Sound.play();
+					music.stop();
+					
+				}
+
+				last_char = event.text.unicode;
+				text.setString(playerInput);
+				cursor.setPosition(545.0f + text.getGlobalBounds().width + 10, 555.0f);
+			}
+			else if (event.type == sf::Event::EventType::KeyReleased && last_char != ' ') {
+				last_char = ' ';
+			}
+			window.clear();
+			//window.draw(key);
+			window.draw(addName);
+			window.draw(Keyname);
+
+			totalTime_cursor += clock_cursor.restart().asSeconds();
+			if (totalTime_cursor >= 0.5) {
+				totalTime_cursor = 0;
+				state_cursor = !state_cursor;
+			}
+			if (state_cursor == true) {
+
+				window.draw(cursor);
+			}
+			window.draw(text);
+
+			window.display();
+		}
+
+		
+
+		deltaTime = 0;
+		clock.restart();
+		playerHP = 80000;
+		score = 0;
+		
+
+
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 641.0f, 560.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 691.0f, 560.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 741.0f, 560.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 791.0f, 560.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 900.0f, 280.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 950.0f, 280.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 1000.0f, 280.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 1050.0f, 280.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 2535.0f, 600.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 2585.0f, 600.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 2635.0f, 600.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 2685.0f, 600.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 2735.0f, 600.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 3170.0f, 265.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 3220.0f, 265.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 3270.0f, 265.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 3320.0f, 265.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 3566.0f, 430.0f));
+
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 10828.0f, 401.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 10863.0f, 351.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 10911.0f, 301.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 10940.0f, 239.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 11130.0f, 239.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 11248.0f, 239.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 11312.0f, 239.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 12140.0f, 239.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 12211.0f, 239.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 12375.0f, 239.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 12440.0f, 239.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 12515.0f, 239.0f));
+
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 1843.0f, 513.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 1880.0f, 480.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 1920.0f, 450.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 1960.0f, 420.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 2000.0f, 390.0f));
+
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 11534.0f, 560.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 11628.0f, 500.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 11691.0f, 500.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 11793.0f, 560.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 13378.0f, 210.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 13495.0f, 210.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 13605.0f, 210.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 13712.0f, 210.0f));
+		itemVector.push_back(Item(&ITEM, sf::Vector2u(10, 1), 0.08f, 13809.0f, 210.0f));
+
+		//addHP
+		luckVector.push_back(Item(&LUCK, sf::Vector2u(1, 1), 0.08f, 2461.0f, 200.0f));
+		luckVector.push_back(Item(&LUCK, sf::Vector2u(1, 1), 0.08f, 4032.0f, 250.0f));
+		luckVector.push_back(Item(&LUCK, sf::Vector2u(1, 1), 0.08f, 12841.0f, 200.0f));
+
+		//Snail Moving
+		SnailMovVector.push_back(Enemy(&snailMov, sf::Vector2u(2, 1), 0.08f, 11505.0f, 370.0f));
+		SnailMovVector.push_back(Enemy(&snailMov, sf::Vector2u(2, 1), 0.08f, 12325.0f, 320.0f));
+		SnailMovVector.push_back(Enemy(&snailMov, sf::Vector2u(2, 1), 0.08f, 11310.0f, 605.0f));
+		SnailMovVector.push_back(Enemy(&snailMov, sf::Vector2u(2, 1), 0.08f, 12325.0f, 605.0f));
+
+		//Snail
+		SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, (rand() % 1000 + 20), 650.0f));
+		SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, (rand() % 1000 + 20), 650.0f));
+		SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 1520.0f, 650.0f));
+		SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 2700.0f, 650.0f));
+		SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 3650.0f, 650.0f));
+		SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 4000.0f, 650.0f));
+
+		//SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, 11587.0f, 376.0f));
+		SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, (rand() % 1000 + 12000), 650.0f));
+		SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, (rand() % 1000 + 12000), 650.0f));
+		SnailVector.push_back(Enemy(&snail, sf::Vector2u(2, 1), 0.08f, (rand() % 1000 + 13000), 650.0f));
+
+
+
+
 		while (start == true) {
+
+			sf::Event event;
+
+			deltaTime = clock.restart().asSeconds();
+            sf::Vector2f pos = player.GetPosition();
+		
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) {
 				pause = true;
@@ -413,8 +635,8 @@ int main()
 
 			count = player.GetPosition().x;
 
-			deltaTime = clock.restart().asSeconds();
-			sf::Vector2f pos = player.GetPosition();
+			/*deltaTime = clock.restart().asSeconds();
+			sf::Vector2f pos = player.GetPosition();*/
 			std::cout << pos.x << ' ' << pos.y << '\n';
 
 			//std::cout << deltaTime;
@@ -470,7 +692,7 @@ int main()
 
 			//window.draw(background2);
 			for (Platform& platform : platforms)
-				platform.Draw(window);
+			    platform.Draw(window);
 			window.draw(background);
 			window.draw(background2);
 
@@ -482,6 +704,7 @@ int main()
 			for (int i = 0; i < itemVector.size(); i++)
 			{
 				if (itemVector[i].getpoint() == 1) {
+					Soundcoin.play();
 					score += 100;
 
 
@@ -554,6 +777,12 @@ int main()
 					}
 					luckVector.erase(luckVector.begin() + i);
 				}
+			}
+
+			if (player.GetPosition().x < 14669 && player.GetPosition().x > 14619 )
+			{
+				//Soundcat.play();
+				checkHP = true;
 			}
 
 			// check nharm
@@ -686,8 +915,9 @@ int main()
 			Score.setPosition({ view.getCenter().x - 200 ,60 });
 
 			HP.setPosition({ view.getCenter().x - 200 ,20 });
-
+			//setposition °√Õ∫hp
 			coinScore.setPosition({ view.getCenter().x - 20 ,view.getCenter().y - 200 });
+			hpScore.setPosition({ view.getCenter().x - 100 ,view.getCenter().y - 100 });
 			LastScore.setPosition({ view.getCenter().x - 100 ,view.getCenter().y - 15 });
 
 			if (checkColi == true) {
@@ -707,6 +937,7 @@ int main()
 					}
 				}
 			}
+
 			if (checkDraw == false) {
 				player.Draw(window);
 			}
@@ -719,6 +950,7 @@ int main()
 			//bullet1.draw(window);
 			//player.Draw(window);
 			window.draw(Score);
+			//«“¥°√Õ∫hp
 			window.draw(HP);
 			//platform2.Draw(window);
 			//window.draw(player);
@@ -755,6 +987,7 @@ int main()
 						Soundch.play();
 						start = false;
 						menu = true;
+						pause = false;
 						MENU.setPosition(view.getCenter().x - 540, 0.0f);
 						mainMENU.setPosition(view.getCenter().x - 540, 0.0f);
 						playMENU.setPosition(view.getCenter().x - 540, 0.0f);
@@ -765,19 +998,34 @@ int main()
 				}
 			}
 
-			if (checkHP == true) {
-				//window.close();
-				window.draw(scoreEndGame);
-				scoreEndGame.setPosition(view.getCenter().x - 540, 0);
-				point1.str(" ");
-				point1 << "  " << score;
-				coinScore.setString(point1.str());
-				window.draw(coinScore);
+			if (checkHP == true) {				
 
-				point2.str(" ");
-				point2 << "  " << score;
-				LastScore.setString(point2.str());
-				window.draw(LastScore);
+				window.draw(scoreEndGame);///game over
+				scoreEndGame.setPosition(view.getCenter().x - 540, 0);
+
+				if (playerHP > 0) {
+
+					
+
+					point1.str(" ");
+					point1 << "  " << score;
+					coinScore.setString(point1.str());
+					window.draw(coinScore);
+
+
+					point2.str(" ");
+					point2 << "  " << score + playerHP;
+					LastScore.setString(point2.str());
+					window.draw(LastScore);
+
+					point3.str(" ");
+					point3 << "  " << playerHP;
+					hpScore.setString(point3.str());
+					window.draw(hpScore);
+
+
+				}
+
 				std::cout << "............................";
 				cout << sf::Mouse::getPosition(window).x << " " << sf::Mouse::getPosition(window).y << endl;
 				if (sf::Mouse::getPosition(window).x >= 411 &&
@@ -785,16 +1033,64 @@ int main()
 					sf::Mouse::getPosition(window).x <= 669 &&
 					sf::Mouse::getPosition(window).y <= 568)
 				{
-					if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-						Soundch.play();
-						window.close();
 
+					if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+						vector<pair<int, string> > SScore;
+						string temp, tempString;
+						int tempInt = 0, X = 1;
+
+						while (window.pollEvent(event))
+						{
+							if (event.type == sf::Event::Closed)
+								window.close();
+							fileWriter.open("p/highscore.txt", std::ios::out | std::ios::app);
+							fileWriter << "\n" << user_Name << "," << score + playerHP;
+							
+							fileWriter.close();
+							playerInput.clear();
+						}
+						adminFile.close();
+
+
+					
+						
+						menu = true;
+						start = false;
+						checkHP = false;
+						highSCore = false;
+
+						mainMENU.setPosition(view.getCenter().x-540, 0);
+						MENU.setPosition(view.getCenter().x - 540, 0);
+						playMENU.setPosition(view.getCenter().x-540, 0);
+						scoreMENU.setPosition(view.getCenter().x-540, 0);
+						exitMENU.setPosition(view.getCenter().x-540, 0);
+						scoreEndGame.setPosition(view.getCenter().x - 540, 0);
 					}
 				}
 			}
 			window.display();
 		}
-			
+
+		loop++;
+		checkHP= false;
+		player.setPosition(540, 300);
+		
+
+		for (int i = 0; i < SnailVector.size(); i++) {
+			SnailVector.erase(SnailVector.begin() + i);
+		}
+		SnailVector.clear();
+
+		for (int i = 0; i < luckVector.size(); i++) {
+			luckVector.erase(luckVector.begin() + i);
+		}
+		 luckVector.clear();
+
+		 for (int i = 0; i < SnailMovVector.size(); i++) {
+			 SnailMovVector.erase(SnailMovVector.begin() + i);
+		 }
+		 SnailMovVector.clear();
+
 		}
 		return 0;
 }
