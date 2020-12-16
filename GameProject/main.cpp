@@ -157,6 +157,20 @@ int main()
 	score_game.loadFromFile("p/score.png");
 	scoreEndGame.setTexture(&score_game);
 
+	//Game Over
+	sf::RectangleShape GameOver(sf::Vector2f(1080.0f, 720.0f));
+	GameOver.setPosition(0.0f, 0.0f);
+	sf::Texture game_over;
+	game_over.loadFromFile("p/gameover.png");
+	GameOver.setTexture(&game_over);
+
+	///Menu_highscore////
+	sf::RectangleShape Ranking(sf::Vector2f(1080.0f, 720.0f));
+	Ranking.setPosition(0.0f, 0.0f);
+	sf::Texture rank;
+	rank.loadFromFile("pic/rank.png");
+	Ranking.setTexture(&rank);
+
 	//-----------------------------------------MUSIC SOUND-----------------------------------------//
 	//soundmenu
 	sf::Music music;
@@ -181,6 +195,20 @@ int main()
 	soundcoin.loadFromFile("p/coin.WAV");
 	sf::Sound Soundcoin;
 	Soundcoin.setBuffer(soundcoin);
+
+	//sound lucky
+	sf::SoundBuffer soundlucky;
+	soundlucky.loadFromFile("p/lucky.WAV");
+	sf::Sound Soundlucky;
+	Soundlucky.setBuffer(soundlucky);
+
+	//sound gameover
+	sf::SoundBuffer soundgameOver;
+	soundgameOver.loadFromFile("p/gameover.WAV");
+	sf::Sound Soundgame_over;
+	Soundgame_over.setBuffer(soundgameOver);
+
+	//----------------------------------------------------------------
 
 	sf::Font font;
 	font.loadFromFile("p/kenvector_future.ttf");
@@ -231,7 +259,7 @@ int main()
 	Keyname.setCharacterSize(40);
 	Keyname.setString(" ");
 	Keyname.setFont(font);
-	Keyname.setFillColor(sf::Color::Black);
+	Keyname.setFillColor(sf::Color::Red);
 	char last_char = ' ';
 	sf::RectangleShape cursor;
 	cursor.setSize(sf::Vector2f(5.0f, 30.0f));
@@ -259,7 +287,7 @@ int main()
 	sf::RectangleShape addName(sf::Vector2f(1080.0f, 720.0f));
 	addName.setPosition(0.0f, 0.0f);
 	sf::Texture addName_1;
-	//addName_1.loadFromFile("pic/Keyname.png");
+	addName_1.loadFromFile("p/HowToPlay.png");
 	addName.setTexture(&addName_1);
 
 	//Moving Platform
@@ -315,6 +343,7 @@ int main()
 	platforms.push_back(Platform(nullptr, sf::Vector2f(210.0f, 37.0f), sf::Vector2f(12870.0f, 500.0f)));
 	platforms.push_back(Platform(nullptr, sf::Vector2f(210.0f, 37.0f), sf::Vector2f(13176.0f, 333.0f)));
 	platforms.push_back(Platform(nullptr, sf::Vector2f(210.0f, 270.0f), sf::Vector2f(13888.0f, 517.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(70.0f, 32.0f), sf::Vector2f(12870.0f, 470.0f)));
 
 	platforms.push_back(Platform(nullptr, sf::Vector2f(5000.0f, 64.0f), sf::Vector2f(12500.0f, 688.0f)));
 
@@ -422,7 +451,7 @@ int main()
 			cout << sf::Mouse::getPosition(window).x << " " << sf::Mouse::getPosition(window).y << endl;
 
 			window.clear();
-			//window.draw(hh);
+			//window.draw(Ranking);
 			sf::Text text1("", font);
 			text1.setCharacterSize(30);
 			text1.setFillColor(sf::Color::White);
@@ -598,6 +627,7 @@ int main()
 		luckVector.push_back(Item(&LUCK, sf::Vector2u(1, 1), 0.08f, 2461.0f, 200.0f));
 		luckVector.push_back(Item(&LUCK, sf::Vector2u(1, 1), 0.08f, 4032.0f, 250.0f));
 		luckVector.push_back(Item(&LUCK, sf::Vector2u(1, 1), 0.08f, 12841.0f, 200.0f));
+		luckVector.push_back(Item(&LUCK, sf::Vector2u(1, 1), 0.08f, 11606.0f, 200.0f));
 
 		//Snail Moving
 		SnailMovVector.push_back(Enemy(&snailMov, sf::Vector2u(2, 1), 0.08f, 11505.0f, 370.0f));
@@ -632,7 +662,7 @@ int main()
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) {
 				pause = true;
 			}
-
+			
 			count = player.GetPosition().x;
 
 			/*deltaTime = clock.restart().asSeconds();
@@ -766,7 +796,7 @@ int main()
 
 			for (int i = 0; i < luckVector.size(); i++) {
 				if (luckVector[i].GetCollider().CheckCollision(player.GetCollider())) {
-
+					Soundlucky.play();
 					//std::cout << "............................";
 					playerHP += 4000;
 					HP.setSize(sf::Vector2f(playerHP / 320.f, 15));
@@ -843,6 +873,34 @@ int main()
 			}
 
 			if (player.GetPosition().x < 11096 && player.GetPosition().x > 11029 && player.GetPosition().y < 400 && player.GetPosition().y > 395)
+			{
+				Soundcat.play();
+				playerHP -= 500;
+				HP.setSize(sf::Vector2f(playerHP / 320.f, 15));
+				checkColi = true;
+				q = 0;
+				if (playerHP < 0) {
+
+					playerHP = 0;
+					checkHP = true;
+				}
+			}
+
+			if (player.GetPosition().x > 12807 && player.GetPosition().x < 12906 && player.GetPosition().y < 415 && player.GetPosition().y > 413)
+			{
+				Soundcat.play();
+				playerHP -= 500;
+				HP.setSize(sf::Vector2f(playerHP / 320.f, 15));
+				checkColi = true;
+				q = 0;
+				if (playerHP < 0) {
+
+					playerHP = 0;
+					checkHP = true;
+				}
+			}
+
+			if (player.GetPosition().x > 13143 && player.GetPosition().x < 12906 && player.GetPosition().y < 427 && player.GetPosition().y > 350)
 			{
 				Soundcat.play();
 				playerHP -= 500;
@@ -999,9 +1057,9 @@ int main()
 			}
 
 			if (checkHP == true) {				
-
-				window.draw(scoreEndGame);///game over
-				scoreEndGame.setPosition(view.getCenter().x - 540, 0);
+				
+				window.draw(GameOver);///game over
+				GameOver.setPosition(view.getCenter().x - 540, 0);
 
 				if (playerHP > 0) {
 
