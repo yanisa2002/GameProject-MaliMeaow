@@ -168,8 +168,15 @@ int main()
 	sf::RectangleShape Ranking(sf::Vector2f(1080.0f, 720.0f));
 	Ranking.setPosition(0.0f, 0.0f);
 	sf::Texture rank;
-	rank.loadFromFile("pic/rank.png");
+	rank.loadFromFile("p/rank.png");
 	Ranking.setTexture(&rank);
+
+	///game win
+	sf::RectangleShape GameOver2(sf::Vector2f(1080.0f, 720.0f));
+	GameOver2.setPosition(0.0f, 0.0f);
+	sf::Texture gameover2;
+	gameover2.loadFromFile("p/gameover2.png");
+	GameOver2.setTexture(&gameover2);
 
 	//-----------------------------------------MUSIC SOUND-----------------------------------------//
 	//soundmenu
@@ -177,6 +184,12 @@ int main()
 	music.openFromFile("p/Swinging Pants.ogg");
 	music.setLoop(true);
 	music.setVolume(20.f);
+
+	//sound in game
+	sf::Music musicgame;
+	musicgame.openFromFile("p/Farm Frolics.ogg");
+	musicgame.setLoop(true);
+	musicgame.setVolume(20.f);
 
 	//soundclick
 	sf::SoundBuffer soundc;
@@ -207,6 +220,12 @@ int main()
 	soundgameOver.loadFromFile("p/gameover.WAV");
 	sf::Sound Soundgame_over;
 	Soundgame_over.setBuffer(soundgameOver);
+
+	//sound win
+	sf::SoundBuffer soundWin;
+	soundWin.loadFromFile("p/win.WAV");
+	sf::Sound Soundgame_win;
+	Soundgame_win.setBuffer(soundWin);
 
 	//----------------------------------------------------------------
 
@@ -343,7 +362,7 @@ int main()
 	platforms.push_back(Platform(nullptr, sf::Vector2f(210.0f, 37.0f), sf::Vector2f(12870.0f, 500.0f)));
 	platforms.push_back(Platform(nullptr, sf::Vector2f(210.0f, 37.0f), sf::Vector2f(13176.0f, 333.0f)));
 	platforms.push_back(Platform(nullptr, sf::Vector2f(210.0f, 270.0f), sf::Vector2f(13888.0f, 517.0f)));
-	platforms.push_back(Platform(nullptr, sf::Vector2f(70.0f, 32.0f), sf::Vector2f(12870.0f, 470.0f)));
+	//platforms.push_back(Platform(nullptr, sf::Vector2f(70.0f, 32.0f), sf::Vector2f(12870.0f, 470.0f)));
 
 	platforms.push_back(Platform(nullptr, sf::Vector2f(5000.0f, 64.0f), sf::Vector2f(12500.0f, 688.0f)));
 
@@ -354,6 +373,8 @@ int main()
 	int loop = 0;
 	int score = 0;
 	int q = 0;
+	int sound = 0;
+	int soundwin = 0;
 	float counTime = 0;
 	bool checkHP = false;
 	bool checkDraw = false;
@@ -364,6 +385,8 @@ int main()
 	bool endGame = false;
 	bool memName = false;
 	bool highSCore = false;
+	bool soundCheck = false;
+	bool win = false;
 
 	int count, Bul = 0;
 	float deltaTime = 0.0f;
@@ -418,7 +441,7 @@ int main()
 				window.draw(scoreMENU);
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 				{
-					//Soundch.play();
+					Soundch.play();
 					menu = false;
 					start = false;
 					highSCore = true;
@@ -443,6 +466,9 @@ int main()
 
 		while (highSCore == true) {
 
+			
+			
+
 			if (loop == 0) {
 				view.setCenter(540, 360);
 			}
@@ -451,7 +477,7 @@ int main()
 			cout << sf::Mouse::getPosition(window).x << " " << sf::Mouse::getPosition(window).y << endl;
 
 			window.clear();
-			//window.draw(Ranking);
+			window.draw(Ranking);
 			sf::Text text1("", font);
 			text1.setCharacterSize(30);
 			text1.setFillColor(sf::Color::White);
@@ -535,7 +561,8 @@ int main()
 					memName = false;
 					start = true;
 					highSCore = false;
-					//part1Sound.play();
+					sound = 0;
+					musicgame.play();
 					music.stop();
 					
 				}
@@ -766,12 +793,13 @@ int main()
 					q = 0;
 					if (playerHP < 0) {
 						playerHP = 0;
+						Soundgame_over.play();
 						checkHP = true;
 					}
 				}
 			}
 
-			if (checkHP == false && pause == false) {
+			if (checkHP == false && pause == false ) {
 				for (int i = 0; i < itemVector.size(); i++)
 				{
 					itemVector[i].update(deltaTime, player);
@@ -815,6 +843,7 @@ int main()
 				checkHP = true;
 			}
 
+			
 			// check nharm
 			if (player.GetPosition().x < 2107 && player.GetPosition().x > 1948 && player.GetPosition().y >= 500 && player.GetPosition().y <= 502)
 			{
@@ -830,7 +859,7 @@ int main()
 				}
 			}
 
-			if (player.GetPosition().x < 3330 && player.GetPosition().x > 3183 && player.GetPosition().y == 588)
+			if (player.GetPosition().x < 3320 && player.GetPosition().x > 3202 && player.GetPosition().y > 590 && player.GetPosition().y > 588)
 			{
 				Soundcat.play();
 				playerHP -= 100;
@@ -844,7 +873,7 @@ int main()
 				}
 			}
 
-			if (player.GetPosition().x < 1311 && player.GetPosition().x > 1170 && player.GetPosition().y == 588)
+			if (player.GetPosition().x < 1311 && player.GetPosition().x > 1170 && player.GetPosition().y > 588 && player.GetPosition().y < 589)
 			{
 				Soundcat.play();
 				playerHP -= 100;
@@ -886,7 +915,7 @@ int main()
 				}
 			}
 
-			if (player.GetPosition().x > 12807 && player.GetPosition().x < 12906 && player.GetPosition().y < 415 && player.GetPosition().y > 413)
+			if (player.GetPosition().x > 12859 && player.GetPosition().x < 12880 && player.GetPosition().y < 420 && player.GetPosition().y > 413)
 			{
 				Soundcat.play();
 				playerHP -= 500;
@@ -900,7 +929,21 @@ int main()
 				}
 			}
 
-			if (player.GetPosition().x > 13143 && player.GetPosition().x < 12906 && player.GetPosition().y < 427 && player.GetPosition().y > 350)
+			if (player.GetPosition().x > 13143 && player.GetPosition().x < 13213 && player.GetPosition().y < 420 && player.GetPosition().y > 350)
+			{
+				Soundcat.play();
+				playerHP -= 500;
+				HP.setSize(sf::Vector2f(playerHP / 320.f, 15));
+				checkColi = true;
+				q = 0;
+				if (playerHP < 0) {
+
+					playerHP = 0;
+					checkHP = true;
+				}
+			}
+
+			if (player.GetPosition().x > 13447 && player.GetPosition().x < 13653 && player.GetPosition().y < 650 && player.GetPosition().y > 588)
 			{
 				Soundcat.play();
 				playerHP -= 500;
@@ -975,8 +1018,8 @@ int main()
 			HP.setPosition({ view.getCenter().x - 200 ,20 });
 			//setposition °√Õ∫hp
 			coinScore.setPosition({ view.getCenter().x - 20 ,view.getCenter().y - 200 });
-			hpScore.setPosition({ view.getCenter().x - 100 ,view.getCenter().y - 100 });
-			LastScore.setPosition({ view.getCenter().x - 100 ,view.getCenter().y - 15 });
+			hpScore.setPosition({ view.getCenter().x - 70 ,view.getCenter().y - 100 });
+			LastScore.setPosition({ view.getCenter().x - 170 ,view.getCenter().y - 15 });
 
 			if (checkColi == true) {
 				if (q < 10) {
@@ -999,7 +1042,7 @@ int main()
 			if (checkDraw == false) {
 				player.Draw(window);
 			}
-			
+
 			//platform1.GetCollider().CheckCollision(player.GetCollider(), 0.5f);
 			//platform2.GetCollider().CheckCollision(player.GetCollider(), 1.0f);
 
@@ -1010,9 +1053,13 @@ int main()
 			window.draw(Score);
 			//«“¥°√Õ∫hp
 			window.draw(HP);
-			//platform2.Draw(window);
+		/*	if (endGame == true) {
+				scoreEndGame.setPosition(view.getCenter().x - 540, 0);
+				window.draw(scoreEndGame);
+			}*/			//platform2.Draw(window);
 			//window.draw(player);
 			if (pause == true) {
+				musicgame.pause();
 				pauseGame.setPosition(view.getCenter().x - 540, 0);
 				pauseBGame.setPosition(view.getCenter().x - 540, 0);
 				window.draw(pauseGame);
@@ -1028,6 +1075,7 @@ int main()
 					if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
 						Soundch.play();
 						pause = false;
+
 						//menu = false;
 						//start = true;
 						//MemScore = true;
@@ -1046,24 +1094,49 @@ int main()
 						start = false;
 						menu = true;
 						pause = false;
+
 						MENU.setPosition(view.getCenter().x - 540, 0.0f);
 						mainMENU.setPosition(view.getCenter().x - 540, 0.0f);
 						playMENU.setPosition(view.getCenter().x - 540, 0.0f);
 						scoreMENU.setPosition(view.getCenter().x - 540, 0.0f);
 						exitMENU.setPosition(view.getCenter().x - 540, 0.0f);
+						Ranking.setPosition(view.getCenter().x - 540, 0.0f);
+						addName.setPosition(view.getCenter().x - 540, 0.0f);
+						Keyname.setPosition(view.getCenter().x - 540, 0.0f);
+						cursor.setPosition(view.getCenter().x +5 + text.getGlobalBounds().width + 10, 555.0f);
+						//last_char = event.text.unicode;
+						text.setString(playerInput);
+						Keyname.setPosition(view.getCenter().x - 240, 500);
+						text.setPosition(view.getCenter().x - 15, 535.0f);
 						//Rank = true;
 					}
 				}
 			}
 
-			if (checkHP == true) {				
-				
-				window.draw(GameOver);///game over
-				GameOver.setPosition(view.getCenter().x - 540, 0);
+			if (checkHP == true) {	
 
-				if (playerHP > 0) {
+				soundCheck = false;
+				win = false;
+
+				
+				musicgame.stop();
+				window.draw(scoreEndGame);
+				scoreEndGame.setPosition(view.getCenter().x - 540, 0);
+				if (playerHP <= 0) {
+
+					for (; sound < 1; sound++) {
+						soundCheck = true;
+					}
+					window.draw(GameOver);///game over
+					GameOver.setPosition(view.getCenter().x - 540, 0);
 
 					
+				}
+				if (playerHP > 0) {
+
+					for (; soundwin < 1; soundwin++) {
+						win = true;
+					}
 
 					point1.str(" ");
 					point1 << "  " << score;
@@ -1091,8 +1164,10 @@ int main()
 					sf::Mouse::getPosition(window).x <= 669 &&
 					sf::Mouse::getPosition(window).y <= 568)
 				{
-
+					window.draw(GameOver2);
+					GameOver2.setPosition(view.getCenter().x - 540, 0);
 					if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+						Soundch.play();
 						vector<pair<int, string> > SScore;
 						string temp, tempString;
 						int tempInt = 0, X = 1;
@@ -1122,8 +1197,22 @@ int main()
 						playMENU.setPosition(view.getCenter().x-540, 0);
 						scoreMENU.setPosition(view.getCenter().x-540, 0);
 						exitMENU.setPosition(view.getCenter().x-540, 0);
-						scoreEndGame.setPosition(view.getCenter().x - 540, 0);
+						Ranking.setPosition(view.getCenter().x - 540, 0);
+						addName.setPosition(view.getCenter().x - 540, 0.0f);
+						Keyname.setPosition(view.getCenter().x - 540, 0.0f);
+						cursor.setPosition(view.getCenter().x + 5 + text.getGlobalBounds().width + 10, 555.0f);
+						last_char = event.text.unicode;
+						text.setString(playerInput);
+						Keyname.setPosition(view.getCenter().x - 240, 500);
+						text.setPosition(view.getCenter().x - 15, 535.0f);
 					}
+				}
+				if (soundCheck == true) {
+					Soundgame_over.play();
+				}
+
+				if (win == true) {
+					Soundgame_win.play();
 				}
 			}
 			window.display();
